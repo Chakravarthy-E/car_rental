@@ -7,6 +7,8 @@ import AdminLogin from "./admin/AdminLogin";
 import AdminSignUp from "./admin/AdminSignUp";
 import Destination from "./mybookings/Destination";
 import PageNotFound from "./PageNotFound";
+import OrderPage from "./mybookings/OrderPage";
+import BookingDetails from "./mybookings/BookingDetails";
 
 const Approutes = () => {
   return (
@@ -18,6 +20,8 @@ const Approutes = () => {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-signup" element={<AdminSignUp />} />
         <Route path="/destination" element={<Destination/>} />
+        <Route path="/orderpage" element={<OrderPage />} />
+        <Route path="/bookingdetails" element ={<BookingDetails />} />
         <Route path="/*" element={<PageNotFound />} /> 
       </Routes>
     </Router>
