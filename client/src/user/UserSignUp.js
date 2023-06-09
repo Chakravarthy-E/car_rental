@@ -1,9 +1,12 @@
+<<<<<<< main
 import React from 'react'
 import "./styles/signup.css"
 import { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
+
+>>>>>>> main
 const UserSignUp = () => {
 
 
@@ -75,6 +78,7 @@ const UserSignUp = () => {
   }
   return (
     <div>
+<<<<<<< main
       <form   >
         {!error?<h4 className='text-light'> Register your Account </h4>
         :<h4 className='text-light1'>{error}</h4>}
@@ -92,9 +96,12 @@ const UserSignUp = () => {
         onChange={e => {setconf_pass(e.target.value);seterror("")}}/>
 
         <button onClick={Handleclick}>Register</button>
+=======
+
+>>>>>>> main
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default UserSignUp
+export default UserSignUp;
