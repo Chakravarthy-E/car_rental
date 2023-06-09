@@ -17,7 +17,7 @@ const Approutes = () => {
         <Route path="/usersignup" element={<UserSignUp />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-signup" element={<AdminSignUp />} />
-        <Route path="/destionation" element={<Destination/>} />
+        <Route path="/destination" element={<Destination/>} />
         <Route path="/*" element={<PageNotFound />} /> 
       </Routes>
     </Router>
