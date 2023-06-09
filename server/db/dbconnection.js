@@ -6,7 +6,7 @@ require("dotenv").config();
 const db = process.env.MONGO_URL;
 
 mongoose
-  .connect(db)
+  .connect('mongodb://127.0.0.1:27017/main_project')
   .then((res) => {
     console.log("database connected successfully");
   })
