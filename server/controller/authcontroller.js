@@ -1,5 +1,6 @@
 const User = require("../model/user");
 const jwt = require('jsonwebtoken');
+const Admin =require("../model/admin")
 
 const handleErrors = (err) => {
     console.log(err.message, err.code);
@@ -7,7 +8,7 @@ const handleErrors = (err) => {
   
     // duplicate email error
     if (err.code === 11000) {
-      errors.email = 'that email is already registered';
+      errors.email = 'That Email Is Already Registered';
       return errors;
     }
   
@@ -51,6 +52,7 @@ module.exports.UserSignup = async (req,res) =>{
 module.exports.Userlogin = async (req, res) => {
     const { email, password } = req.body;
     console.log(email, password)
+    let errormessage="";
   
     try {
       const user = await User.login(email, password);
@@ -58,7 +60,45 @@ module.exports.Userlogin = async (req, res) => {
       res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
       res.status(200).json(user);
     } catch (err) {
-      res.status(400).json({});
+      if(err.message.includes('incorrect password')||
+      err.message.includes('incorrect email')){
+        errormessage = 'Invalid User Details';
+    }
+    res.status(400).json(errormessage); 
     }
   
+}
+
+module.exports.AdminSignup = async (req,res) =>{
+  console.log("in AdminSignup")
+  const { email, password,contact, Name } = req.body;
+  try {
+      const user = await Admin.create({ email, password, Name, contact  });
+      res.status(201).json(user);
+    }
+    catch(err) {
+      const errors = handleErrors(err);
+      res.status(400).json({ errors });
+    }
+}
+
+module.exports.Adminlogin = async (req, res) => {
+  const { email, password } = req.body;
+  console.log(email, password);
+  let errormessage="";
+
+  try {
+    const admin = await Admin.login(email, password);
+    const token = createToken(admin._id);
+    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).json({Admin:admin});
+  } catch (err) {
+    console.log("from adminlogin",err);
+    if(err.message.includes('incorrect password')||
+    err.message.includes('incorrect email')){
+      errormessage = 'Invalid Admin Details';
+    }
+    res.status(400).json(errormessage);  
+  }
+
 }

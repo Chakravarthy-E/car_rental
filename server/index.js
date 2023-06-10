@@ -1,6 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const authroutes =require("./Routes/authroutes")
+const Carroutes =require("./Routes/carroutes")
 require("./db/dbconnection")
 const cookieParser = require('cookie-parser');
 
@@ -14,8 +15,16 @@ app.use(cors({
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser());
 
+const session= require("express-session");
+app.use(session({
+  secret: 'save-me-god',
+  resave: false,
+  saveUninitialized: true
+}));
+
 app.listen(port,()=>{
     console.log(`server running at ${port}`)
 })
 
 app.use(authroutes);
+app.use(Carroutes);
