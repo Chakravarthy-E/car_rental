@@ -2,6 +2,7 @@ import Nav from "./Nav";
 import car_data from "./car_data";
 import "./styles/helloadmin.css";
 import {Link} from "react-router-dom"
+
 function HelloAdmin() {
   return (
     <div>
@@ -33,7 +34,11 @@ function HelloAdmin() {
               <p className="text-dark">{value.Person} Person</p>
               <span>{value.car_type}</span>
               <span>{value.Price} Rs/KM</span>
+
+
               <hr style={{ color: "#7C7C7C" }} />
+
+
               <div style={{ marginTop: "20px" }}>
                 <span>Available date</span>
                 <span>{value.Date}</span>
@@ -45,4 +50,7 @@ function HelloAdmin() {
     </div>
   );
 }
+
+
 export default HelloAdmin;
+

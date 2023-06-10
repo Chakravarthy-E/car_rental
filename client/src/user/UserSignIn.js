@@ -49,7 +49,7 @@ const UserSignIn = () => {
     <div>
     <form action="post">
     {!error?<h4 className='text-light'>Login Your Account</h4>:
-    <h4 className='text-light1'>{error}</h4>}
+    <h4 className='text-warning'>{error}</h4>}
 
     <input type="email" name="email" placeholder='Email' 
     onChange={e => {setemail(e.target.value);seterror("")}}/>

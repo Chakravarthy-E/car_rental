@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./styles/addcar.css";
 import axios from "axios";
 import Nav from "./Nav";
+
 const AddCar = () => {
   const [name, setname] = useState("");
   const [cartype, setcartype] = useState("");
@@ -14,25 +15,34 @@ const AddCar = () => {
   const [images, setimages] = useState([]);
   const [carDetails, setCarDetails] = useState("");
   const [Details, setDetails] = useState("");
+
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     setimages([...images, ...files]);
     console.log(images);
   };
+
   const handleImageDelete = (index) => {
     const newCarImages = [...images];
     newCarImages.splice(index, 1);
     setimages(newCarImages);
   };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission or data saving here
+
+
     let img = [];
     for (let i = 0; i < images.length; i++) {
       let x = URL.createObjectURL(images[i]);
       img.push({ x });
     }
+
+
     console.log(img);
+
     try {
       console.log(images, URL.createObjectURL(images[0]));
       const data = await axios.post(
@@ -71,9 +81,12 @@ const AddCar = () => {
       console.log(err);
     }
   };
+
+
   const handleCancel = () => {
     // Handle cancel action here
   };
+
   return (
     <>
       <Nav />
@@ -209,4 +222,7 @@ const AddCar = () => {
     </>
   );
 };
+
+
 export default AddCar;
+
