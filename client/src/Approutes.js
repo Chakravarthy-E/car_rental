@@ -9,6 +9,7 @@ import Destination from "./mybookings/Destination";
 import PageNotFound from "./PageNotFound";
 import OrderPage from "./mybookings/OrderPage";
 import BookingDetails from "./mybookings/BookingDetails";
+import CarDetails from "./Car/CarDetails";
 
 const Approutes = () => {
   return (
@@ -20,8 +21,9 @@ const Approutes = () => {
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-signup" element={<AdminSignUp />} />
         <Route path="/destination" element={<Destination/>} />
-        <Route path="/orderpage" element={<OrderPage />} />
+        <Route path="/render" element={<OrderPage />} />
         <Route path="/bookingdetails" element ={<BookingDetails />} />
+        <Route path="/cardetails/:carId" element={<CarDetails />} />
         <Route path="/*" element={<PageNotFound />} /> 
       </Routes>
     </Router>
