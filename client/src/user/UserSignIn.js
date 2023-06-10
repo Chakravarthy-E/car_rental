@@ -27,11 +27,6 @@ const UserSignIn = () => {
       seterror("email must contain @")
     }
 
-    // else if(password.length<6){
-
-    //   seterror("Password Should Contain At Least 6 Characters");
-    // }
-
 
     else{
 
@@ -42,6 +37,7 @@ const UserSignIn = () => {
     }
     catch (error) {
       console.log("error from frontend", error);
+      seterror(error.response.data);
     }
     }
 

@@ -28,15 +28,18 @@ const AddCar = () => {
     setimages(newCarImages);
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission or data saving here
+
 
     let img = [];
     for (let i = 0; i < images.length; i++) {
       let x = URL.createObjectURL(images[i]);
       img.push({ x });
     }
+
 
     console.log(img);
 
@@ -78,6 +81,7 @@ const AddCar = () => {
       console.log(err);
     }
   };
+
 
   const handleCancel = () => {
     // Handle cancel action here
@@ -219,4 +223,6 @@ const AddCar = () => {
   );
 };
 
+
 export default AddCar;
+

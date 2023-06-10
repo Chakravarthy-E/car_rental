@@ -70,8 +70,10 @@ const UserSignUp = () => {
       }, 3000);
       //navigate("/")
     }
-    catch (error) {
-      console.log("error from frontend", error);
+    catch (err) {
+      console.log("error from frontend", err,err.response.data.errors.email);
+      seterror(err.response.data.errors.email);
+      // seterror(err.response.data.erros.password);
     }
     }
 
