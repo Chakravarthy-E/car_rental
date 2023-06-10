@@ -9,8 +9,14 @@ import Destination from "./mybookings/Destination";
 import PageNotFound from "./PageNotFound";
 import OrderPage from "./mybookings/OrderPage";
 import BookingDetails from "./mybookings/BookingDetails";
-import  AddCar  from "./admin/AddCar";
+
+
+
+import CarDetails from "./Car/CarDetails";
+import EditCarDetails from "./Car/EditCarDetails";
 import HelloAdmin from "./admin/HelloAdmin";
+import AdminEdit from "./admin/AdminEdit";
+import AddCar from "./admin/AddCar.jsx"
 
 
 const Approutes = () => {
@@ -25,9 +31,14 @@ const Approutes = () => {
         <Route path="/destination" element={<Destination/>} />
         <Route path="/orderpage" element={<OrderPage />} />
         <Route path="/bookingdetails" element ={<BookingDetails />} />
+
+        <Route path="/cardetails/:carId" element={<CarDetails />} />
+        <Route path="/editcar/:carId" element={<EditCarDetails />} />
         <Route path="/helloadmin" element={<HelloAdmin />} />
-        <Route path="/addcar" element={<AddCar />} />  
-        <Route path="/*" element={<PageNotFound />} />
+        <Route path="/addcar" element={<AddCar />} />
+        <Route path="/edit-car/:Id" element={<AdminEdit />} />
+        <Route path="/*" element={<PageNotFound />} /> 
+
       </Routes>
     </Router>
   );
