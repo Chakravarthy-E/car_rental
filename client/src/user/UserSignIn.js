@@ -27,21 +27,17 @@ const UserSignIn = () => {
       seterror("email must contain @")
     }
 
-    // else if(password.length<6){
-
-    //   seterror("Password Should Contain At Least 6 Characters");
-    // }
-
 
     else{
 
     try {
       const data = await axios.post("http://localhost:5000/userlogin", { email, password }, { withCredentials: true })
       console.log(data)
-      navigate("/destionation")
+      navigate("/destination")
     }
     catch (error) {
       console.log("error from frontend", error);
+      seterror(error.response.data);
     }
     }
 

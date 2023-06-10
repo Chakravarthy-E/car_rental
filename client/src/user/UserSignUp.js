@@ -1,4 +1,3 @@
-<<<<<<< main
 import React from 'react'
 import "./styles/signup.css"
 import { useState } from 'react';
@@ -6,7 +5,7 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 
->>>>>>> main
+
 const UserSignUp = () => {
 
 
@@ -70,15 +69,16 @@ const UserSignUp = () => {
       }, 3000);
       //navigate("/")
     }
-    catch (error) {
-      console.log("error from frontend", error);
+    catch (err) {
+      console.log("error from frontend", err,err.response.data.errors.email);
+      seterror(err.response.data.errors.email);
+      // seterror(err.response.data.erros.password);
     }
     }
 
   }
   return (
     <div>
-<<<<<<< main
       <form   >
         {!error?<h4 className='text-light'> Register your Account </h4>
         :<h4 className='text-light1'>{error}</h4>}
@@ -96,9 +96,6 @@ const UserSignUp = () => {
         onChange={e => {setconf_pass(e.target.value);seterror("")}}/>
 
         <button onClick={Handleclick}>Register</button>
-=======
-
->>>>>>> main
       </form>
     </div>
   );
