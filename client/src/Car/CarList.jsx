@@ -1,6 +1,6 @@
-import React from "react";
+import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
-import "./carlist.css"; // Import the CSS file
+import "./styles/carlist.css"; // Import the CSS file
 
 const CarList = () => {
   const navigate = useNavigate();
@@ -10,21 +10,28 @@ const CarList = () => {
       id: 1,
       name: "Car 1",
       brand: "Brand 1",
-      image: "car1.jpg",
+      image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
       mileage: "20/KM",
     },
     {
       id: 2,
       name: "Car 2",
       brand: "Brand 2",
-      image: "car2.jpg",
+      image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
       mileage: "20/KM",
     },
     {
       id: 3,
       name: "Car 3",
       brand: "Brand 3",
-      image: "car3.jpg",
+      image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
+      mileage: "20/KM",
+    },
+    {
+      id: 4,
+      name: "Car 3",
+      brand: "Brand 3",
+      image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60",
       mileage: "20/KM",
     },
   ];
@@ -35,6 +42,7 @@ const CarList = () => {
   };
 
   return (
+    
     <div className="car-list-container">
       <h2>Car List</h2>
       <div className="car-list">

@@ -38,7 +38,7 @@ const UserSignIn = () => {
     try {
       const data = await axios.post("http://localhost:5000/userlogin", { email, password }, { withCredentials: true })
       console.log(data)
-      navigate("/destionation")
+      navigate("/destination")
     }
     catch (error) {
       console.log("error from frontend", error);
@@ -53,7 +53,7 @@ const UserSignIn = () => {
     <div>
     <form action="post">
     {!error?<h4 className='text-light'>Login Your Account</h4>:
-    <h4 className='text-light1'>{error}</h4>}
+    <h4 className='text-warning'>{error}</h4>}
 
     <input type="email" name="email" placeholder='Email' 
     onChange={e => {setemail(e.target.value);seterror("")}}/>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const location = useLocation();
@@ -10,8 +11,8 @@ const Header = () => {
   const endDate = searchParams.get("endDate");
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container" style={{ height: "40px" }}>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{height:"50px"}}>
+      <div className="container" style={{ height: "40px",marginBottom:"80px" }}>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -28,6 +29,9 @@ const Header = () => {
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">End Date: {endDate}</a> {/* eslint-disable-next-line */}
+            </li>
+            <li className="nav-item">
+            <a className="nav-link"><Link to="/destination"><button className="btn btn-primary">Modify</button></Link></a>
             </li>
           </ul>
         </div>

@@ -25,7 +25,7 @@ const Destination = () => {
     // Construct the URL with query parameters
     const queryParams = new URLSearchParams(formData).toString();
     // Redirect to the render page with the query parameters
-    navigate(`/render?${queryParams}`);
+    navigate(`/orderpage?${queryParams}`);
   };
 
   return (
