@@ -12,6 +12,7 @@ import BookingDetails from "./mybookings/BookingDetails";
 import CarDetails from "./Car/CarDetails";
 import EditCarDetails from "./Car/EditCarDetails";
 import HelloAdmin from "./admin/HelloAdmin";
+
 import EditCar from "./admin/EditCar.jsx";
 import AddCar from "./admin/AddCar.jsx";
 import MyBookings from "./mybookings/MyBookings";
@@ -33,8 +34,10 @@ const Approutes = () => {
         <Route path="/editcar/:carId" element={<EditCarDetails />} />
         <Route path="/helloadmin" element={<HelloAdmin />} />
         <Route path="/addcar" element={<AddCar />} />
+
         <Route path="/edit-car/:Id" element={<EditCar />} />
         <Route path="/*" element={<PageNotFound />} />
+          
       </Routes>
     </Router>
   );
