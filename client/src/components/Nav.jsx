@@ -1,16 +1,24 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./styles/nav.css"; // Import the CSS file for styling
+import { Link, useNavigate } from "react-router-dom";
+import "./styles/nav.css";
+// Import the CSS file for styling
 
 const Nav = () => {
+  const navigate = useNavigate();
+
+  function logOutHandler() {
+    localStorage.clear();
+    navigate("/");
+  }
+
   return (
     <div className="nav-container">
       <div className="logo">Car Rental App</div>
-      <div className="links">
-        <Link to="/mybookings" className="link">My Bookings</Link>
-        <Link to="/" className="link" onClick={() => localStorage.clear()}>
-          Log out
+      <div className="links d-flex justify-content-center align-items-center gap-2">
+        <Link to="/mybookings" className="link">
+          My Bookings
         </Link>
+        <button className="text-light rounded" onClick={logOutHandler}>Log Out</button>
       </div>
     </div>
   );
