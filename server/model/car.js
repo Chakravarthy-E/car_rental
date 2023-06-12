@@ -24,7 +24,7 @@ const carSchema = new mongoose.Schema({
     perKm:{
         type:String
     },
-    avalableFrom:{
+    availableFrom:{
        type:String
     },
     availableTill:{

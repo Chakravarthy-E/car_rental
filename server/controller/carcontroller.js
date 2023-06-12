@@ -5,7 +5,7 @@ const CarDetails  = require("../model/car");
 module.exports.AddCar= async ( req,res )=>{
     
     console.log(req.body,req.session.userId)
-    const{ name,cartype,model,milage,perKm,avalableFrom,availableTill,description
+    const{ name,cartype,model,milage,perKm,availableFrom,availableTill,description
         ,img,carDetails,Details} =req.body;
     
     let AdminId = req.session.userId; 
@@ -18,7 +18,7 @@ module.exports.AddCar= async ( req,res )=>{
             model, 
             milage,
             perKm,
-            avalableFrom, 
+            availableFrom, 
             availableTill,
             description,
             images:img,
@@ -74,6 +74,24 @@ module.exports.GetAllCar= async ( req,res )=>{
         
         const car = await CarDetails.find({})
         console.log(car);
+        res.status(201).json(car)
+    }
+    catch(err){
+            console.log(err)
+            res.status(400).send(err);
+    }
+}
+
+module.exports.GetAdminCar= async ( req,res )=>{
+
+    
+    let AdminId = req.session.userId; 
+    try{
+
+        console.log()
+        
+        const car = await CarDetails.find({AdminId})
+        //console.log("car",car);
         res.status(201).json(car)
     }
     catch(err){
