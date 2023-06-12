@@ -1,44 +1,44 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import "./styles/header.css";
+import { CarContextDetails } from "../context/CarContext";
 
 const Header = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const origin = searchParams.get("origin");
-  const destination = searchParams.get("destination");
-  const startDate = searchParams.get("startDate");
-  const endDate = searchParams.get("endDate");
+
+  const { headerData, setheaderData, setInputData } =
+    useContext(CarContextDetails);
+  setInputData(headerData);
+
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{height:"50px"}}>
-      <div className="container" style={{ height: "40px",marginBottom:"80px" }}>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link" href="#">Origin: {origin}</a> {/* eslint-disable-next-line */}
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Destination: {destination}</a> {/* eslint-disable-next-line */}
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Start Date: {startDate}</a> {/* eslint-disable-next-line */}
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">End Date: {endDate}</a> {/* eslint-disable-next-line */}
-            </li>
-            <li className="nav-item">
-            <a className="nav-link"><Link to="/destination"><button className="btn btn-primary">Modify</button></Link></a>
-            </li>
+    <div id="header">
+      <div className="container">
+        <ul className="list-inline">
+          <li className="list-inline-item text-dark">
+            Orgin: <span className="text-secondary">{headerData.origin}</span>
+            <i
+              className="fa-solid fa-arrowo-right"
+              style={{ color: "red" }}
+            ></i>
+          </li>
+          <li className="list-inline-item text-dark">
+            Destination:{" "}
+            <span className="text-secondary">{headerData.destination}</span>
+          </li>
+          <li className="list-inline-item text-dark">
+            Starting Date:{" "}
+            <span className="text-secondary">{headerData.startDate}</span>
+          </li>
+          <li className="list-inline-item text-dark">
+            End Date:{" "}
+            <span className="text-secondary">{headerData.endDate}</span>
+          </li>
           </ul>
-        </div>
+          <Link className="btn btn-primary" id="modify" to='/destination' onClick={()=>setheaderData(headerData)}>Modify</Link>
+      
       </div>
-    </nav>
+    </div>
   );
 };
 
 export default Header;
-

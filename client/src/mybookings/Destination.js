@@ -1,86 +1,94 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./styles/destination.css";
+import React, { useContext } from "react";
 import Nav from "../components/Nav.jsx";
+import "./styles/destination.css"
+import { useNavigate } from "react-router-dom";
+import { CarContextDetails } from "../context/CarContext.js";
+import Home from "../components/Home.jsx";
 
 const Destination = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    origin: "",
-    destination: "",
-    startDate: "",
-    endDate: ""
-  });
+  const TokenUser = JSON.parse(localStorage.getItem("token-user"))
+  const {setheaderData,inputdata,setInputData} = useContext(CarContextDetails)
+  const navigate = useNavigate()
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Construct the URL with query parameters
-    const queryParams = new URLSearchParams(formData).toString();
-    // Redirect to the render page with the query parameters
-    navigate(`/orderpage?${queryParams}`);
-  };
+  
+const handleInput =(e) => {
+    const name = e.target.name;
+    const value = e.target.value
+    setInputData({...inputdata,[name]:value})
+}
 
-  return (
+const save = (e) => {
+  e.preventDefault()
+  const {origin,destination,startDate,endDate} = inputdata;
+  const data = new FormData()
+  data.append("origin",origin)
+  data.append("destination", destination)
+  data.append("startDate", startDate)
+  data.append("endDate", endDate)
+  console.log(inputdata);
+  navigate('/orderpage')
+  setheaderData(inputdata)
+}
+
+  return (<>
+  =
     <div className="destination">
       <Nav />
+      <h4 className="text-center mt-5 text-light">Start your journey............</h4>
+      <div className="container mt-3">
+        <form onSubmit={save} >
+          <div className="mb-2">
+            <label className="form-label text-light">Origin Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="origin"
+              onChange={handleInput}
+              required
+            />
+          </div>
 
-      <div className="container">
-        <h1>Life is a journey, enjoy the trip</h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Origin Name"
-            className="fields"
-            name="origin"
-            value={formData.origin}
-            onChange={handleChange}
-            required
-          />
+          <div className="mb-2">
+            <label className="form-label text-light">Destination Name</label>
+            <input
+              type="text"
+              className="form-control"
+              name="destination"
+              onChange={handleInput}
+              required
+            />
+          </div>
 
-          <input
-            type="text"
-            placeholder="Destination Name"
-            className="fields"
-            name="destination"
-            value={formData.destination}
-            onChange={handleChange}
-            required
-          />
+          <div className="mb-2">
+            <label className="form-label text-light">Starting Date</label>
+            <input
+              type="date"
+              className="form-control"
+              name="startDate"
+              onChange={handleInput}
+              required
+            />
+          </div>
 
-          <input
-            type="date"
-            placeholder="Starting Date"
-            className="fields"
-            name="startDate"
-            value={formData.startDate}
-            onChange={handleChange}
-            required
-          />
+          <div className="mb-4">
+            <label className="form-label text-light">End Date</label>
+            <input
+              type="date"
+              className="form-control"
+              name="endDate"
+              onChange={handleInput}
+              required
+            />
+          </div>
 
-          <input
-            type="date"
-            placeholder="End Date"
-            className="fields"
-            name="endDate"
-            value={formData.endDate}
-            onChange={handleChange}
-            required
-          />
-
-          <button type="submit" className="fields">
-            Check
+          <button type="submit" className="btn btn-primary">
+            Save
           </button>
         </form>
       </div>
     </div>
+    </>
   );
 };
 
