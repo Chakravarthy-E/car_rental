@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 .Home-page {
   height: 100vh;
   background-image: url("../../images/background.png");
@@ -14,9 +16,11 @@
 .slogan {
   font-size: 30px;
   margin-top: -20px;
-  width: 60%;
+  width: 70%;
   margin-left: -8px;
   color: white;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing:3px;
 }
 
 .Register {
@@ -30,9 +34,9 @@
 .button-50 {
   width: 150px;
   font-size: medium;
-  font-weight: bold;
   border: none;
   border-radius: 20px;
+  background:rgb(48, 120, 226);
 }
 .button-user-admin-login-containecr {
   display: flex;
@@ -43,10 +47,12 @@
 }
 
 p {
-  font-size: 30px;
+  font-size: 23px;
   font-weight: 700;
   color: azure;
   font-family: initial;
+  font-family: 'Poppins', sans-serif;
+
 }
 
 .form-type {

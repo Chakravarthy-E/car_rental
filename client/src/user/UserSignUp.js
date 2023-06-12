@@ -3,7 +3,7 @@ import React from 'react'
 import "./styles/signup.css"
 import { useState } from 'react';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -17,7 +17,6 @@ const UserSignUp = () => {
   const [conf_pass,setconf_pass] = useState("");
   const [error,seterror]= useState("");
 
-  const navigate = useNavigate()
 
   async function Handleclick(e) {
     e.preventDefault();
@@ -68,7 +67,7 @@ const UserSignUp = () => {
         setcontact("");
         setconf_pass("");
       }, 3000);
-      //navigate("/")
+      // navigate("/")
     }
     catch (err) {
       console.log("error from frontend", err,err.response.data.errors.email);

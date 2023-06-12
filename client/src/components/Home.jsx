@@ -5,6 +5,7 @@ import AdminLogin from "../admin/AdminLogin.js";
 import Navigation from "./Navigation.jsx";
 import { useState } from "react";
 import "../components/styles/home.css";
+import AdminSignUp from "../admin/AdminSignUp.js";
 
 const Home = () => {
   const [FormType, setFormType] = useState(<UserSignIn />);
@@ -20,9 +21,12 @@ const Home = () => {
   function Adminlogin() {
     setFormType(<AdminLogin />);
   }
+  function Adminsignup(){
+    setFormType(<AdminSignUp />)
+  }
 
   return (
-    <div>
+    <div className="font-poppins">
       <Navigation />
       <div className="Home-page">
         <div className="Register">
@@ -47,6 +51,9 @@ const Home = () => {
             <div className="button-user-admin-login-containecr">
               <button className="button-50" onClick={Adminlogin}>
                 Admin login
+              </button>
+              <button className="button-50" onClick={Adminsignup}>
+                Admin signup
               </button>
             </div>
           </div>

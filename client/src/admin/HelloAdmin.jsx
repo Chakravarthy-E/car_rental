@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import Nav from "./Nav";
 import car_data from "./car_data";
 import "./styles/helloadmin.css";
+
 import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CloudinaryImage from "../Cloudinary/cloudinaryimage";
 
@@ -10,6 +12,12 @@ function HelloAdmin() {
 
   const [car_data,setcar_data] = useState([])
   const [adminid,setadminid]= useState("");
+  
+  const navigate = useNavigate();
+  
+  const addCar = () => {
+    navigate("/addcar");
+  };
 
   useEffect(()=>{
      
@@ -33,10 +41,11 @@ function HelloAdmin() {
 
 
 
+
   return (
     <div>
-    <Nav />
-      <div style={{ marginBottom: "20px",marginLeft:"30px" }}>
+      <Nav />
+      <div style={{ marginBottom: "20px", marginLeft: "30px" }}>
         <p className="text-dark"></p>
         <div
           style={{
@@ -46,13 +55,17 @@ function HelloAdmin() {
           }}
         >
           <h2 style={{ marginLeft: "20px" }}>Hello Admin</h2>
-          <Link to="/addcar"><button id="a-adminpage-butt" className="rounded">Add Cars</button></Link>
+          <button id="a-adminpage-butt" className="rounded" onClick={addCar}>
+            Add Cars
+          </button>
         </div>
       </div>
+
       <div id="container" style={{margin:"30px"}}>
         {car_data.map((value,index) => (
           <div id="card" key={index}>
             {/* {console.log(value)} */}
+
             <div id="img">
               {/* <img
                 src={value.image}
@@ -65,9 +78,7 @@ function HelloAdmin() {
               <span>{value.cartype}</span>
               <span>{value.perKm} Rs/KM</span>
 
-
               <hr style={{ color: "#7C7C7C" }} />
-
 
               <div style={{ marginTop: "20px" }}>
                 <span>Available date</span>
@@ -80,7 +91,4 @@ function HelloAdmin() {
     </div>
   );
 }
-
-
 export default HelloAdmin;
-
