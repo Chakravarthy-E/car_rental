@@ -17,7 +17,7 @@ import EditCarDetails from "./Car/EditCarDetails";
 import HelloAdmin from "./admin/HelloAdmin";
 import AdminEdit from "./admin/AdminEdit";
 import AddCar from "./admin/AddCar.jsx"
-
+import { CarContextDetails } from "./context/CarContext";
 
 const Approutes = () => {
   return (
@@ -37,6 +37,7 @@ const Approutes = () => {
         <Route path="/helloadmin" element={<HelloAdmin />} />
         <Route path="/addcar" element={<AddCar />} />
         <Route path="/edit-car/:Id" element={<AdminEdit />} />
+        <Route path="/carcontext" element={<CarContextDetails />} />
         <Route path="/*" element={<PageNotFound />} /> 
 
       </Routes>

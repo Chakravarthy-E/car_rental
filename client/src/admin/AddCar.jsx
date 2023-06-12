@@ -15,11 +15,26 @@ const AddCar = () => {
   const [images, setimages] = useState([]);
   const [carDetails, setCarDetails] = useState("");
   const [Details, setDetails] = useState("");
+  const [cloudinaryurl,setcloudinaryurl] = useState([])
 
   const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    setimages([...images, ...files]);
-    console.log(images);
+    const files = Array.from(e.target.files);//[a,b]
+    console.log(files);
+    setimages([...images, ...files]);//[c,d,a,b]
+
+    for(let i=0; i<files.length; i++){
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[i]);
+        reader.onloadend = () => {
+          // console.log(reader.result)
+          setcloudinaryurl([...cloudinaryurl,reader.result])
+        };
+        reader.onerror = () => {
+        console.error('error in image loading');
+        }
+    }
+    console.log("cloudinaryurl",cloudinaryurl);
+    
   };
 
   const handleImageDelete = (index) => {
@@ -28,58 +43,106 @@ const AddCar = () => {
     setimages(newCarImages);
   };
 
+  //Handle images cloudinary
+
+  const uploadImage = async (base64EncodedImage) => {
+
+    console.log("hello")
+
+    try {
+      await axios.post('http://localhost:5000/api/upload', base64EncodedImage 
+      ,{
+        params:{
+          name:name,
+          model:model
+        }
+      , withCredentials: true });
+    } 
+    catch (err) {
+      console.error(err);
+    }
+
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission or data saving here
 
+    console.log("images",images);
+    console.log("cloudinaryurl",cloudinaryurl);
 
-    let img = [];
+    let array=[];
+
+
     for (let i = 0; i < images.length; i++) {
-      let x = URL.createObjectURL(images[i]);
-      img.push({ x });
-    }
 
+      const reader = new FileReader();
+      reader.readAsDataURL(images[i]);
+      console.log(i,images.length)
 
-    console.log(img);
-
-    try {
-      console.log(images, URL.createObjectURL(images[0]));
-      const data = await axios.post(
-        "http://localhost:5000/addcar",
-        {
-          name,
-          cartype,
-          model,
-          milage,
-          perKm,
-          availableFrom,
-          availableTill,
-          description,
-          img,
-          carDetails,
-          Details,
-        },
-        { withCredentials: true }
-      );
-      console.log(data);
-      if (data.status == 201) {
-        alert("Added sucessfully");
-        setDetails("");
-        setCarDetails("");
-        setimages([]);
-        setdescription("");
-        setAvailableTill("");
-        setAvailableFrom("");
-        setperKM("");
-        setname("");
-        setcartype("");
-        setmodel("");
-        setmilage("");
+      reader.onloadend = () => {
+        array.push(reader.result)
+        // uploadImage(reader.result); 
+      };
+      reader.onerror = () => {
+        console.error('error in image loading');
       }
-    } catch (err) {
-      console.log(err);
+
+      if(i == (images.length-1 )){
+      
+        
+          reader.onloadend = () => {
+            console.log("hello",array);
+            uploadImage(array);
+          };
+        
+      }
+
     }
+
+
+
+
+    console.log( array);
+
+      try {
+        console.log(images, URL.createObjectURL(images[0]));
+        const data = await axios.post(
+          "http://localhost:5000/addcar",
+          {
+            name,
+            cartype,
+            model,
+            milage,
+            perKm,
+            availableFrom,
+            availableTill,
+            description,
+            images,
+            carDetails,
+            Details,
+          },
+          { withCredentials: true }
+        );
+        console.log(data);
+        if (data.status == 201) {
+          alert("Added sucessfully");
+          setDetails("");
+          setCarDetails("");
+          setimages([]);
+          setdescription("");
+          setAvailableTill("");
+          setAvailableFrom("");
+          setperKM("");
+          setname("");
+          setcartype("");
+          setmodel("");
+          setmilage("");
+        }
+      } catch (err) {
+        console.log(err);
+      }
   };
 
 
@@ -188,6 +251,9 @@ const AddCar = () => {
               multiple
               onChange={handleImageUpload}
             />
+
+
+
             <div className="image-preview">
               {images.map((image, index) => (
                 <div className="image-item" key={index}>
@@ -204,6 +270,9 @@ const AddCar = () => {
                 </div>
               ))}
             </div>
+
+
+
           </div>
           <div className="details-section">
             <h2>Car Details</h2>
