@@ -33,7 +33,7 @@ app.post('/api/upload', requireAuth, async (req, res) => {
     for (let i = 0; i < fileStr.length; i++) {
       const uploadResponse = await cloudinary.uploader.upload(fileStr[i], {
         // Upload_presets: 'anandhu_image',
-        folder: 'anandhu_image',
+        folder: 'car',
         tags: req.session.userId,
         context: `name=${req.query.name}|model=${req.query.model}`
       });
@@ -52,7 +52,7 @@ app.get('/api/images', async (req, res) => {
 
   try {
   const { resources } = await cloudinary.search
-  .expression(`folder:anandhu_image AND tags:${req.query.id}`)
+  .expression(`folder:car AND tags:${req.query.id}`)
   .with_field('context')
   .sort_by('public_id', 'desc')
   .max_results(30)
