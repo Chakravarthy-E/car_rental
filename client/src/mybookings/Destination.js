@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Nav from "../components/Nav.jsx";
 import "./styles/destination.css"
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,9 @@ const Destination = () => {
   const {setheaderData,inputdata,setInputData} = useContext(CarContextDetails)
   const navigate = useNavigate()
 
-
+  useEffect(()=>{
+    
+  },[inputdata])
   
 const handleInput =(e) => {
     const name = e.target.name;
@@ -27,12 +29,12 @@ const save = (e) => {
   data.append("startDate", startDate)
   data.append("endDate", endDate)
   console.log(inputdata);
-  navigate('/orderpage')
   setheaderData(inputdata)
+  navigate('/orderpage')
+  
 }
 
   return (<>
-  =
     <div className="destination">
       <Nav />
       <h4 className="text-center mt-5 text-light">Start your journey............</h4>
@@ -87,7 +89,7 @@ const save = (e) => {
           </button>
         </form>
       </div>
-    </div>
+    </div>:
     </>
   );
 };

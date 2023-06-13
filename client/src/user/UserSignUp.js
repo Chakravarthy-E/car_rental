@@ -39,7 +39,7 @@ const UserSignUp = () => {
       seterror("Confirm Password Didn't Match");
     }
 
-    else if(password.length<6){
+    else if(password.length < 6){
 
       seterror("Password Should Contain At Least 6 Characters");
     }

@@ -5,6 +5,7 @@ import "./styles/helloadmin.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CloudinaryImage from "../Cloudinary/cloudinaryimage";
+import { Image } from 'cloudinary-react';
 
 function HelloAdmin() {
   const [car_data, setcar_data] = useState([]);
@@ -55,28 +56,31 @@ function HelloAdmin() {
           </button>
         </div>
       </div>
-      <div id="container" style={{ margin: "30px" }}>
-        {car_data.map((value, index) => (
-          <Link to={`/edit-car/${value.id}`} className="text-decoration-none" key={index}>
-            <div id="card">
-              {/* {console.log(value)} */}
-              <div id="img">
-                {/* <img src={value.image} style={{ width: "280px", margin: "5px" }} /> */}
-                <CloudinaryImage
-                  carname={value.name}
-                  carmodel={value.model}
-                  adminid={adminid}
-                />
-              </div>
-              <div id="details">
-                <p className="text-dark">6 Person</p>
-                <span>{value.cartype}</span>
-                <span>{value.perKm} Rs/KM</span>
-                <hr style={{ color: "#7C7C7C" }} />
-                <div style={{ marginTop: "20px" }}>
-                  <span>Available date</span>
-                  <span>{value.availableTill}</span>
-                </div>
+
+
+      <div id="container" style={{margin:"30px"}}>
+        {car_data.map((value,index) => (
+          <div id="card" key={index}>
+            {/* {console.log(value)} */}
+
+            <div id="img">
+              {/* <img
+                src={value.image}
+                style={{ width: "280px", margin: "5px" }}
+              /> */}
+              <Image cloudName="dtyutg5l9" publicId={value.images} width="300" crop="scale" />
+            </div>
+            <div id="details">
+              <p className="text-dark">6 Person</p>
+              <span>{value.cartype}</span>
+              <span>{value.perKm} Rs/KM</span>
+
+              <hr style={{ color: "#7C7C7C" }} />
+
+              <div style={{ marginTop: "20px" }}>
+                <span>Available date</span>
+                <span>{value.availableFrom} - {value.availableTill}</span>
+      
               </div>
             </div>
           </Link>
@@ -87,3 +91,4 @@ function HelloAdmin() {
 }
 
 export default HelloAdmin;
+

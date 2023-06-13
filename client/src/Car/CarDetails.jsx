@@ -4,7 +4,7 @@ import "./styles/carDetails.css";
 
 const CarDetails = () => {
   const { carId } = useParams();
-  const [carDetails, setCarDetails] = useState(null);
+  const [carDetails, setCarDetails] = useState(1);
 
   useEffect(() => {
     // Simulating fetching car details from an API
