@@ -31,7 +31,7 @@ const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) =>
 
         <li>Car Name:{data.name}</li>
         <li>Car Model:{data.model}</li>
-        <Image cloudName="dtyutg5l9" publicId={data.image} width="300" crop="scale" />
+  { /* <Image cloudName="dtyutg5l9" publicId={data.image} width="300" crop="scale" /> */}
        {/* <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" alt="" style={{width:"200px",height:"200px",objectFit:'cover'}} /> */}
         <hr />
         <li>Origin:{inputdata.origin}</li>
@@ -75,7 +75,7 @@ const PaymentDetails = ({currentDate,currentTime}) => {
   }
 
   return (
-    <div className="payment-details">
+    <div className="payment-details my-1" >
       <h3>Payment Details</h3>
       <ul>
         <li>Price/Km:{data.perKm}</li>
@@ -100,7 +100,7 @@ const BookingDetails = () => {
     const [currentTime, setCurrentTime] = useState("");
   return (
     <>
-<Nav />
+     <Nav />
     <div className="booking-details">
       <div className="container">
         <div className="left-side">
@@ -112,8 +112,9 @@ const BookingDetails = () => {
 
         </div>
       </div>
+      </div>
     </>
   );
-};
+}
 
 export default BookingDetails;

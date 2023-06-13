@@ -4,12 +4,11 @@ import car_data from "./car_data";
 import "./styles/helloadmin.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import CloudinaryImage from "../Cloudinary/cloudinaryimage";
 import { Image } from 'cloudinary-react';
 
 function HelloAdmin() {
-  const [car_data, setcar_data] = useState([]);
-  const [adminid, setadminid] = useState("");
+  const [carData, setCarData] = useState([]);
+  const [adminId, setAdminId] = useState("");
 
   const navigate = useNavigate();
 
@@ -18,24 +17,24 @@ function HelloAdmin() {
   };
 
   useEffect(() => {
-    async function admincar() {
+    async function fetchAdminCarData() {
       try {
-        const admincar = await axios.get("http://localhost:5000/getadmincar", {
+        const response = await axios.get("http://localhost:5000/getadmincar", {
           withCredentials: true,
         });
-        const dataWithId = admincar.data.map((car) => ({
+        const dataWithId = response.data.map((car) => ({
           ...car,
           id: car._id, // Assuming the unique identifier is stored in the _id field
         }));
-        console.log("admincar", admincar.data);
-        setcar_data(dataWithId);
-        setadminid(dataWithId.AdminId);
+        console.log("admincar", response.data);
+        setCarData(dataWithId);
+        setAdminId(dataWithId.AdminId);
       } catch (error) {
         console.log(error);
       }
     }
 
-    admincar();
+    fetchAdminCarData();
   }, []);
 
   return (
@@ -58,32 +57,27 @@ function HelloAdmin() {
       </div>
 
 
-      <div id="container" style={{margin:"30px"}}>
-        {car_data.map((value,index) => (
-          <div id="card" key={index}>
-            {/* {console.log(value)} */}
-
-            <div id="img">
-              {/* <img
-                src={value.image}
-                style={{ width: "280px", margin: "5px" }}
-              /> */}
-              <Image cloudName="dtyutg5l9" publicId={value.images} width="300" crop="scale" />
-            </div>
-            <div id="details">
-              <p className="text-dark">6 Person</p>
-              <span>{value.cartype}</span>
-              <span>{value.perKm} Rs/KM</span>
-
-              <hr style={{ color: "#7C7C7C" }} />
-
-              <div style={{ marginTop: "20px" }}>
-                <span>Available date</span>
-                <span>{value.availableFrom} - {value.availableTill}</span>
-      
+      <div id="container" style={{ margin: "30px" }}>
+        {carData.map((value) => (
+          <div id="card" key={value.id}>
+            <Link to="/editcar">
+              <div id="img">
+                <Image cloudName="dtyutg5l9" publicId={value.images} width="300" crop="scale" />
               </div>
-            </div>
-          </Link>
+              <div id="details">
+                <p className="text-dark">6 Person</p>
+                <span>{value.cartype}</span>
+                <span>{value.perKm} Rs/KM</span>
+
+                <hr style={{ color: "#7C7C7C" }} />
+
+                <div style={{ marginTop: "20px" }}>
+                  <span>Available date</span>
+                  <span>{value.availableFrom} - {value.availableTill}</span>
+                </div>
+              </div>
+            </Link>
+          </div>
         ))}
       </div>
     </div>
@@ -91,4 +85,3 @@ function HelloAdmin() {
 }
 
 export default HelloAdmin;
-

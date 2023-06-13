@@ -78,6 +78,7 @@ const EditCar = () => {
         setcartype("");
         setmodel("");
         setmilage("");
+        
       }
     } catch (err) {
       console.log(err);
