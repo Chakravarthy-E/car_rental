@@ -11,7 +11,15 @@ import { Image } from 'cloudinary-react';
 const CarList = () => {
   const [filterType, setfilterType] = useState("All");
 
-  const { data ,setData } = useContext(CarContextDetails);
+  const { data ,setData,inputdata,setInputData } = useContext(CarContextDetails);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("inputdata");
+    if (savedData) {
+      setInputData(JSON.parse(savedData));
+    }
+    console.log(inputdata)
+  }, []);
 
   useEffect(() => {
     console.log("data",data); // Log the updated data value
@@ -97,7 +105,7 @@ const CarList = () => {
     Details: car.Details
   })
 
-    navigate(`/bookingdetails`);
+    //navigate(`/bookingdetails`);
   };
 
   // const filteredCars = cars.filter((car) => {
