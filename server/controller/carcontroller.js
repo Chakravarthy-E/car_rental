@@ -6,9 +6,10 @@ module.exports.AddCar= async ( req,res )=>{
     
     console.log(req.body,req.session.userId)
     const{ name,cartype,model,milage,perKm,availableFrom,availableTill,description
-        ,img,carDetails,Details} =req.body;
+        ,public_id,carDetails,Details} =req.body;
     
-    let AdminId = req.session.userId; 
+    let AdminId = req.session.adminId; 
+    console.log("AdminId",AdminId);
     try{
         
         const car = await CarDetails.create({
@@ -21,7 +22,7 @@ module.exports.AddCar= async ( req,res )=>{
             availableFrom, 
             availableTill,
             description,
-            images:img,
+            images:public_id,
             carDetails,
             Details
         })
@@ -37,7 +38,7 @@ module.exports.AddCar= async ( req,res )=>{
 module.exports.EditCar= async(req,res)=>{
 
     const {name} = req.body;
-    let AdminId=req.session.userId;
+    let AdminId=req.session.adminId;
 
     try{
         const updatecar = await CarDetails.updateOne({AdminId,name},{$set:{model: 8}});
@@ -53,7 +54,7 @@ module.exports.EditCar= async(req,res)=>{
 module.exports.DeleteCar= async(req,res)=>{
 
     const {name}=req.body;
-    let AdminId=req.session.userId;
+    let AdminId=req.session.adminId;
 
     try{
         const deletedcar = await CarDetails.deleteOne({AdminId,name});
@@ -69,12 +70,12 @@ module.exports.DeleteCar= async(req,res)=>{
 module.exports.GetAllCar= async ( req,res )=>{
 
     
-    let AdminId = req.session.userId; 
+    
     try{
         
         const car = await CarDetails.find({})
-        console.log(car);
-        res.status(201).json(car)
+        console.log("GetAllCar",car);
+        res.status(201).json(car);
     }
     catch(err){
             console.log(err)
@@ -84,8 +85,10 @@ module.exports.GetAllCar= async ( req,res )=>{
 
 module.exports.GetAdminCar= async ( req,res )=>{
 
+    console.log(req.session.adminId)
+
     
-    let AdminId = req.session.userId; 
+    let AdminId = req.session.adminId; 
     try{
 
         console.log()

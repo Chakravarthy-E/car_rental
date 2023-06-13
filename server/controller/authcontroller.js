@@ -34,6 +34,12 @@ const createToken = (id) => {
   });
 };
 
+const admintoken = (adminid) => {
+  return jwt.sign({ adminid }, 'anandhu daa', {
+    expiresIn: maxAge
+  });
+};
+
 module.exports.UserSignup = async (req,res) =>{
     console.log("in UserSignup")
     const { email, password } = req.body;
@@ -52,6 +58,7 @@ module.exports.UserSignup = async (req,res) =>{
 module.exports.Userlogin = async (req, res) => {
     const { email, password } = req.body;
     console.log(email, password)
+
     let errormessage="";
   
     try {
@@ -61,10 +68,14 @@ module.exports.Userlogin = async (req, res) => {
       console.log(token)
       res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
       res.status(200).json(user);
-    } catch (err) {
+    } 
+    
+    catch (err) {
       if(err.message.includes('incorrect password')||
       err.message.includes('incorrect email')){
+
         errormessage = 'Invalid User Details';
+
     }
     res.status(400).json(errormessage); 
     }
@@ -91,16 +102,33 @@ module.exports.Adminlogin = async (req, res) => {
 
   try {
     const admin = await Admin.login(email, password);
-    const token = createToken(admin._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    const token = admintoken(admin._id);
+
+    res.cookie('adminjwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+
     res.status(200).json({Admin:admin});
+
   } catch (err) {
+
     console.log("from adminlogin",err);
+
     if(err.message.includes('incorrect password')||
     err.message.includes('incorrect email')){
       errormessage = 'Invalid Admin Details';
     }
+    
     res.status(400).json(errormessage);  
   }
 
+}
+
+module.exports.Logoutuser = (req, res) => {
+
+  res.cookie('jwt', '', { maxAge: 1 });
+  res.status(302).send("change url").end()
+}
+
+module.exports.Logoutadmin = (req, res) => {
+  res.cookie('adminjwt', '', { maxAge: 1 });
+  res.status(302).send("change url").end()
 }
