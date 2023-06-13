@@ -48,8 +48,6 @@ app.post('/api/upload', requireAuth, async (req, res) => {
 });
 
 app.get('/api/images', async (req, res) => {
-
-
   console.log("req.query.name",req.query.name,req.query.model,req.query.id)
 
   try {
