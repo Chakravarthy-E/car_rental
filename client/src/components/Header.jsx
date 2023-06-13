@@ -5,8 +5,8 @@ import { CarContextDetails } from "../context/CarContext";
 
 const Header = () => {
 
-  const { headerData, setheaderData, setInputData } =
-    useContext(CarContextDetails);
+  const { headerData, setheaderData, setInputData,setData } = useContext(CarContextDetails);
+  
   setInputData(headerData);
 
 

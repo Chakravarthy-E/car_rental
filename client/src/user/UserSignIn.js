@@ -13,11 +13,16 @@ const UserSignIn = () => {
 
   async function Handleclick(e) {
     e.preventDefault();
+
     if (!email || !password) {
       seterror("All Fields Are Required");
-    } else if (email.indexOf("@") === -1) {
+    } 
+    
+    else if (email.indexOf("@") === -1) {
       seterror("email must contain @");
-    } else {
+    } 
+    
+    else {
       try {
         const response = await axios.post(
           "http://localhost:5000/userlogin",

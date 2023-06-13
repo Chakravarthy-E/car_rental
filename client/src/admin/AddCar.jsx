@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/addcar.css";
 import axios from "axios";
 import Nav from "./Nav";
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddCar = () => {
   const [name, setname] = useState("");
@@ -12,35 +14,93 @@ const AddCar = () => {
   const [availableFrom, setAvailableFrom] = useState("");
   const [availableTill, setAvailableTill] = useState("");
   const [description, setdescription] = useState("");
-  const [images, setimages] = useState([]);
+  const [images, setimages] = useState(null);
   const [carDetails, setCarDetails] = useState("");
   const [Details, setDetails] = useState("");
-  const [cloudinaryurl,setcloudinaryurl] = useState([])
+  const fileInputRef = useRef(null);
+  const [cloudinary,setcloudinary]=useState([])
+  const [public_id,setpublic_id] = useState("")
+
+  const navigate = useNavigate();
+
+  
 
   const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);//[a,b]
-    console.log(files);
-    setimages([...images, ...files]);//[c,d,a,b]
-
-    for(let i=0; i<files.length; i++){
+    const file = e.target.files[0];
+    setimages(file);
+    console.log("handleImageUpload",file)
+    
+    if(file){
         const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[i]);
+        reader.readAsDataURL(file);
+
         reader.onloadend = () => {
-          // console.log(reader.result)
-          setcloudinaryurl([...cloudinaryurl,reader.result])
+        setcloudinary([reader.result]);
         };
         reader.onerror = () => {
         console.error('error in image loading');
         }
-    }
-    console.log("cloudinaryurl",cloudinaryurl);
-    
-  };
+    }    
 
-  const handleImageDelete = (index) => {
-    const newCarImages = [...images];
-    newCarImages.splice(index, 1);
-    setimages(newCarImages);
+  }
+
+  useEffect(() => {
+    if (!public_id) {
+      return;
+    }
+  
+    async function sendDataToServer() {
+      try {
+        // Make the API call after getting the public_id
+        const data = await axios.post(
+          "http://localhost:5000/addadmincar",
+          {
+            name,
+            cartype,
+            model,
+            milage,
+            perKm,
+            availableFrom,
+            availableTill,
+            description,
+            public_id,
+            carDetails,
+            Details,
+          },
+          { withCredentials: true }
+        );
+        console.log(data);
+        if (data.status === 201) {
+          // Reset the form fields if the request is successful
+          alert("Added successfully");
+          setDetails("");
+          setCarDetails("");
+          setimages(null);
+          setdescription("");
+          setAvailableTill("");
+          setAvailableFrom("");
+          setperKM("");
+          setname("");
+          setcartype("");
+          setmodel("");
+          setmilage("");
+          setpublic_id("");
+          setcloudinary([]);
+          fileInputRef.current.value = null;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  
+    sendDataToServer();
+  }, [public_id]);
+  
+
+
+  const handleImageDelete = () => {
+    setimages(null);
+    fileInputRef.current.value = null;
   };
 
   //Handle images cloudinary
@@ -50,14 +110,19 @@ const AddCar = () => {
     console.log("hello")
 
     try {
-      await axios.post('http://localhost:5000/api/upload', base64EncodedImage 
-      ,{
-        params:{
-          name:name,
-          model:model
-        }
-      , withCredentials: true });
-    } 
+        const publicid = await axios.post('http://localhost:5000/api/upload', base64EncodedImage
+        , {
+          params: {
+            name: name,
+            model: model
+          }
+          , withCredentials: true
+        });
+
+        setpublic_id(publicid.data);
+
+        console.log(publicid)
+    }
     catch (err) {
       console.error(err);
     }
@@ -69,68 +134,23 @@ const AddCar = () => {
     e.preventDefault();
     // Handle form submission or data saving here
 
-    console.log("images",images);
-    console.log("cloudinaryurl",cloudinaryurl);
+    const reader = new FileReader();
+    reader.readAsDataURL(images);
 
-    let array=[];
-
-
-    for (let i = 0; i < images.length; i++) {
-
-      const reader = new FileReader();
-      reader.readAsDataURL(images[i]);
-      console.log(i,images.length)
-
-      reader.onloadend = () => {
-        array.push(reader.result)
-        // uploadImage(reader.result); 
-      };
-      reader.onerror = () => {
-        console.error('error in image loading');
-      }
-
-      if(i == (images.length-1 )){
-      
-        
-          reader.onloadend = () => {
-            console.log("hello",array);
-            uploadImage(array);
-          };
-        
-      }
-
+    reader.onloadend = () => {
+      uploadImage(cloudinary);
+    };
+    reader.onerror = () => {
+      console.error('error in image loading');
     }
+  };
 
 
-
-
-    console.log( array);
-
-      try {
-        console.log(images, URL.createObjectURL(images[0]));
-        const data = await axios.post(
-          "http://localhost:5000/addcar",
-          {
-            name,
-            cartype,
-            model,
-            milage,
-            perKm,
-            availableFrom,
-            availableTill,
-            description,
-            images,
-            carDetails,
-            Details,
-          },
-          { withCredentials: true }
-        );
-        console.log(data);
-        if (data.status == 201) {
-          alert("Added sucessfully");
-          setDetails("");
+  const handleCancel = () => {
+    // Handle cancel action here
+    setDetails("");
           setCarDetails("");
-          setimages([]);
+          setimages(null);
           setdescription("");
           setAvailableTill("");
           setAvailableFrom("");
@@ -139,15 +159,11 @@ const AddCar = () => {
           setcartype("");
           setmodel("");
           setmilage("");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-  };
+          setpublic_id("");
+          setcloudinary([]);
+          fileInputRef.current.value = null;
+    navigate(`/helloadmin`)
 
-
-  const handleCancel = () => {
-    // Handle cancel action here
   };
 
   return (
@@ -248,27 +264,25 @@ const AddCar = () => {
             <input
               type="file"
               accept="image/*"
-              multiple
               onChange={handleImageUpload}
+              ref={fileInputRef}
             />
 
 
 
             <div className="image-preview">
-              {images.map((image, index) => (
-                <div className="image-item" key={index}>
-                  <img
-                    src={URL.createObjectURL(image)}
-                    alt={`Car Image ${index + 1}`}
-                  />
-                  <button
-                    className="delete-button"
-                    onClick={() => handleImageDelete(index)}
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
+              {images && <div className="image-item" >
+                <img
+                  src={URL.createObjectURL(images)}
+                  alt="Selected Image"
+                />
+                <button
+                  className="delete-button"
+                  onClick={() => handleImageDelete()}
+                >
+                  X
+                </button>
+              </div>}
             </div>
 
 

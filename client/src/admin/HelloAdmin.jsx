@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CloudinaryImage from "../Cloudinary/cloudinaryimage";
+import { Image } from 'cloudinary-react';
 
 function HelloAdmin() {
 
@@ -71,7 +72,7 @@ function HelloAdmin() {
                 src={value.image}
                 style={{ width: "280px", margin: "5px" }}
               /> */}
-              <CloudinaryImage carname={value.name} carmodel={value.model} adminid={adminid}/>
+              <Image cloudName="dtyutg5l9" publicId={value.images} width="300" crop="scale" />
             </div>
             <div id="details">
               <p className="text-dark">6 Person</p>
@@ -82,7 +83,7 @@ function HelloAdmin() {
 
               <div style={{ marginTop: "20px" }}>
                 <span>Available date</span>
-                <span>{value.availableTill}</span>
+                <span>{value.availableFrom} - {value.availableTill}</span>
               </div>
             </div>
           </div>

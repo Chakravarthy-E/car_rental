@@ -1,8 +1,11 @@
 import React, { createContext, useState } from "react";
+import { useEffect } from "react";
 
 export const CarContextDetails = createContext();
 
 const CarContext = ({ children }) => {
+
+  
   const [car, setCar] = useState([]);
   const [edit, setEdit] = useState({});
   const [headerData, setheaderData] = useState({});
@@ -13,13 +16,14 @@ const CarContext = ({ children }) => {
   const [inputdata, setInputData] = useState({
     origin: "",
     destination: "",
-    startDate: "",
-    endDate: "",
+    startdate: "",
+    enddate: "",
     distance: "",
     MapImg: "",
   });
 
   const [data, setData] = useState({
+    carid:"",
     name: "",
     type: "",
     model: "",
@@ -34,6 +38,19 @@ const CarContext = ({ children }) => {
   });
 
   const [EditPaymaentDatails, setEditPaymaentDatails] = useState({});
+
+  useEffect(() => {
+    // Load data from local storage on component mount
+    const savedData = localStorage.getItem('myData');
+    if (savedData) {
+      setInputData(JSON.parse(savedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save data to local storage whenever it changes
+    localStorage.setItem('myData', JSON.stringify(inputdata));
+  }, [inputdata]);
 
   return (
     <>
