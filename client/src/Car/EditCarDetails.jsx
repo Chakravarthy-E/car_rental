@@ -8,7 +8,7 @@ function EditCarDetails({ carId }) {
 
   useEffect(() => {
     // Fetch car details based on the carId
-    fetch(`https://car-rental-app-server.onrender.com/cars/${carId}`)
+    fetch(``)
       .then((res) => res.json())
       .then((data) => setCarData(data));
   }, [carId]);
@@ -26,8 +26,7 @@ function EditCarDetails({ carId }) {
   };
 
   const handleSaveClick = () => {
-    // Make API call to update car details with updatedCarData
-    fetch(`https://car-rental-app-server.onrender.com/cars/${carId}`, {
+    fetch(`/cars/${carId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -75,9 +74,9 @@ function EditCarDetails({ carId }) {
         </div>
       ) : (
         <div className="car-details">
-          <p>Car Name: <span className="car-data">{carData.name}</span></p>
-          <p>Car Type: <span className="car-data">{carData.type}</span></p>
-          <p>Mileage: <span className="car-data">{carData.mileage}</span></p>
+          <p className='text-dark' >Car Name: <span className="car-data text-dark">{carData.name}</span></p>
+          <p className='text-dark'>Car Type: <span className="car-data text-dark">{carData.type}</span></p>
+          <p className='text-dark'>Mileage: <span className="car-data">{carData.mileage}</span></p>
           <button className="edit-button" onClick={handleEditClick}>
             Edit
           </button>

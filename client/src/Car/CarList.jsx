@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./styles/carlist.css"; // Import the CSS file
@@ -6,12 +7,24 @@ import { useContext } from "react";
 import axios from "axios";
 import AllImageCloudinary from "../Cloudinary/Allimagescloudinary";
 import { Image } from 'cloudinary-react';
+import { Dropdown } from "react-bootstrap";
 
 
 const CarList = () => {
   const [filterType, setfilterType] = useState("All");
 
   const { data ,setData } = useContext(CarContextDetails);
+  
+  
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/getallcar", {
+      authorization: JSON.parse(localStorage.getItem("token-user ")),
+    })
+      .then((res) => res.json())
+      .then((res) => setData(res));
+  }, []);
+
 
   useEffect(() => {
     console.log("data",data); // Log the updated data value
@@ -37,6 +50,10 @@ const CarList = () => {
     }
     Allcar();
   },[])
+  
+  const handleFilterChange = (eventKey, event) => {
+    setFilterType(eventKey);
+  };
 
   // useEffect(()=>{
 
@@ -113,35 +130,37 @@ const CarList = () => {
 
   return (
     <>
-      <div className="filter-section">
-      <h6 className="mx-3 my-1">Car Type</h6>
-        <label>
-          <input
-            type="checkbox"
-            value="All"
-            checked={filterType === "All"}
-            onChange={handleFilterChange}
-          />
-          All
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value="XUV"
-            checked={filterType === "XUV"}
-            onChange={handleFilterChange}
-          />
-          XUV
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            value="SUV"
-            checked={filterType === "SUV"}
-            onChange={handleFilterChange}
-          />
-          UV
-        </label>
+      <div className="filter-section d-flex align-items-center">
+        <h6 className="mx-3 my-1">Car Type</h6>
+        <Dropdown>
+          <Dropdown.Toggle variant="secondary" id="carTypeDropdown">
+            {filterType === "All" ? "All" : "Filter by Type"}
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item
+              eventKey="All"
+              active={filterType === "All"}
+              onClick={() => handleFilterChange("All")}
+            >
+              All
+            </Dropdown.Item>
+            <Dropdown.Item
+              eventKey="XUV"
+              active={filterType === "XUV"}
+              onClick={() => handleFilterChange("XUV")}
+            >
+              XUV
+            </Dropdown.Item>
+            <Dropdown.Item
+              eventKey="UV"
+              active={filterType === "UV"}
+              onClick={() => handleFilterChange("UV")}
+            >
+              UV
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+
       </div>
       <div className="car-list-container">
         <h2>Car List</h2>

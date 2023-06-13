@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import Nav from "../components/Nav";
 import "./styles/bookingdetails.css";
@@ -21,11 +22,13 @@ const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) =>
     }, []);
 
 
+
   return (
     <div className="car-details">
       {console.log(data)}
       <h3>Car Details</h3>
       <ul>
+
         <li>Car Name:{data.name}</li>
         <li>Car Model:{data.model}</li>
         <Image cloudName="dtyutg5l9" publicId={data.image} width="300" crop="scale" />
@@ -43,6 +46,7 @@ const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) =>
     </div>
   );
 };
+
 
 const PaymentDetails = ({currentDate,currentTime}) => {
 
@@ -69,6 +73,7 @@ const PaymentDetails = ({currentDate,currentTime}) => {
 
       navigate("/mybookings")
   }
+
   return (
     <div className="payment-details">
       <h3>Payment Details</h3>
@@ -80,12 +85,15 @@ const PaymentDetails = ({currentDate,currentTime}) => {
         <li>Grand Total:</li>
         <li>RS:</li>
       </ul>
-      <button className="rounded" onClick={handleClick}>Proceed</button>
+      <button className="rounded" onClick={handleClick}>
+        Proceed
+      </button>
     </div>
   );
 };
 
 const BookingDetails = () => {
+
 
 
     const [currentDate, setCurrentDate] = useState("");
@@ -101,9 +109,9 @@ const BookingDetails = () => {
         </div>
         <div className="right-side">
           <PaymentDetails currentDate={currentDate} currentTime={currentTime}/>
+
         </div>
       </div>
-    </div>
     </>
   );
 };
