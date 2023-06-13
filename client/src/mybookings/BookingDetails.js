@@ -10,9 +10,15 @@ import axios from "axios";
 
 const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) => {
 
-  const { data ,setData,inputdata, } = useContext(CarContextDetails);
+  const { data ,setData,inputdata,setInputData } = useContext(CarContextDetails);
 
-
+  useEffect(() => {
+    const savedData = localStorage.getItem(inputdata);
+    if (savedData) {
+      setInputData(JSON.parse(savedData));
+    }
+    console.log(inputdata)
+  }, []);
 
     useEffect(() => {
       const now = new Date();
@@ -34,8 +40,8 @@ const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) =>
   { /* <Image cloudName="dtyutg5l9" publicId={data.image} width="300" crop="scale" /> */}
        {/* <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" alt="" style={{width:"200px",height:"200px",objectFit:'cover'}} /> */}
         <hr />
-        <li>Origin:{inputdata.origin}</li>
-        <li>Destination:{inputdata.destination}</li>
+        <li>Origin: {inputdata.origin}</li>
+        <li>Destination: {inputdata.destination}</li>
         <li>StartDate:{inputdata.startDate}</li>
         <li>EndDate:{inputdata.endDate}</li>
         <hr />

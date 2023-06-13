@@ -9,13 +9,31 @@ import { Image } from "cloudinary-react";
 import { Dropdown } from "react-bootstrap";
 const CarList = () => {
   const [filterType, setfilterType] = useState("All");
-  const { data, setData } = useContext(CarContextDetails);
+
+
+  const { data ,setData,inputdata,setInputData } = useContext(CarContextDetails);
 
   useEffect(() => {
-    console.log("data", data); // Log the updated data value
-  }, [data]);
+    const savedData = localStorage.getItem("inputdata");
+    if (savedData) {
+      setInputData(JSON.parse(savedData));
+    }
+    console.log(inputdata)
+  }, []);
 
-  const [Cars, setCars] = useState([]);
+  const { data ,setData } = useContext(CarContextDetails);
+  
+  
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/getallcar", {
+      authorization: JSON.parse(localStorage.getItem("token-user ")),
+    })
+      .then((res) => res.json())
+      .then((res) => setData(res));
+  }, []);
+
+
 
   useEffect(() => {
     async function Allcar() {
@@ -66,20 +84,21 @@ const CarList = () => {
     // Navigate to the car details page
     console.log("carlist", car._id, i);
     setData({
-      carid: car._id,
-      name: car.name,
-      type: car.cartype,
-      model: car.model,
-      milage: car.milage,
-      image: car.images,
-      availableFrom: car.availableFrom,
-      availableTill: car.availableTill,
-      perKm: car.perKm,
-      description: car.description,
-      carDetails: car.carDetails,
-      Details: car.Details,
-    });
-    navigate(`/bookingdetails`);
+    carid:car._id,  
+    name: car.name,
+    type: car.cartype,
+    model: car.model,
+    milage: car.milage,
+    image: car.images,
+    availableFrom: car.availableFrom,
+    availableTill: car.availableTill,
+    perKm: car.perKm,
+    description: car.description,
+    carDetails: car.carDetails,
+    Details: car.Details
+  })
+
+    //navigate(`/bookingdetails`);
   };
   // const filteredCars = cars.filter((car) => {
   //   if (filterType === "All") {

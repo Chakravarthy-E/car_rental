@@ -1,6 +1,7 @@
 const { Router }=require('express');
-const {UserSignup,Userlogin,AdminSignup,Adminlogin}=require("../controller/authcontroller")
+const {UserSignup,Userlogin,AdminSignup,Adminlogin,Logoutuser,Logoutadmin}=require("../controller/authcontroller")
 const requireAuth = require("../Middleware/token")
+const adminAuth = require("../Middleware/token_admin")
 
 const authroutes=Router();
 
@@ -8,5 +9,7 @@ authroutes.post('/usersignup',UserSignup)
 authroutes.post('/userlogin',Userlogin)
 authroutes.post('/adminsignup',AdminSignup)
 authroutes.post('/adminlogin',Adminlogin)
+authroutes.post('/logoutuser',requireAuth,Logoutuser)
+authroutes.post('/logoutadmin',adminAuth,Logoutadmin)
 
 module.exports = authroutes

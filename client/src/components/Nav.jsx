@@ -1,14 +1,22 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles/nav.css";
+import axios from "axios";
 // Import the CSS file for styling
 
 const Nav = () => {
   const navigate = useNavigate();
 
-  function logOutHandler() {
-    localStorage.clear();
-    navigate("/");
+  async function logOutHandler() {
+
+    try{
+      const value = await axios.get("http://localhost:5000/logoutuser",{withCredentials:true})
+    }
+    catch(error){
+        console.log(error)  
+    }
+    // localStorage.clear();
+    //navigate("/");
   }
 
   return (

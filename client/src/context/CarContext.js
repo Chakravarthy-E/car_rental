@@ -41,7 +41,7 @@ const CarContext = ({ children }) => {
 
   useEffect(() => {
     // Load data from local storage on component mount
-    const savedData = localStorage.getItem('myData');
+    const savedData = localStorage.getItem("inputdata");
     if (savedData) {
       setInputData(JSON.parse(savedData));
     }
@@ -49,7 +49,7 @@ const CarContext = ({ children }) => {
 
   useEffect(() => {
     // Save data to local storage whenever it changes
-    localStorage.setItem('myData', JSON.stringify(inputdata));
+    localStorage.setItem('inputdata', JSON.stringify(inputdata));
   }, [inputdata]);
 
   return (
