@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./styles/editcar.css"
 import axios from "axios";
 import Nav from "./Nav";
@@ -16,6 +16,7 @@ const EditCar = () => {
   const [carDetails, setCarDetails] = useState("");
   const [Details, setDetails] = useState("");
   console.log(images)
+
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);

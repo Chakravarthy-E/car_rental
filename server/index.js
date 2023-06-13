@@ -27,9 +27,7 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.post('/api/upload', adminAuth, async (req, res) => {
-
-    console.log(req.session.userId,req.query.name,req.query.model);   
+app.post('/api/upload', requireAuth, async (req, res) => {
   try {
     const fileStr = req.body[0]
 
