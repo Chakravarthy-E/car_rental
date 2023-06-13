@@ -13,6 +13,17 @@ import { Dropdown } from "react-bootstrap";
 const CarList = () => {
   const [filterType, setfilterType] = useState("All");
 
+
+  const { data ,setData,inputdata,setInputData } = useContext(CarContextDetails);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("inputdata");
+    if (savedData) {
+      setInputData(JSON.parse(savedData));
+    }
+    console.log(inputdata)
+  }, []);
+
   const { data ,setData } = useContext(CarContextDetails);
   
   
@@ -24,6 +35,7 @@ const CarList = () => {
       .then((res) => res.json())
       .then((res) => setData(res));
   }, []);
+
 
 
   useEffect(() => {
@@ -114,7 +126,7 @@ const CarList = () => {
     Details: car.Details
   })
 
-    navigate(`/bookingdetails`);
+    //navigate(`/bookingdetails`);
   };
 
   // const filteredCars = cars.filter((car) => {

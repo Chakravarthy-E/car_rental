@@ -1,23 +1,23 @@
 const jwt=require("jsonwebtoken");
 
-const requireAuth = (req,res,next) =>{
+const adminAuth = (req,res,next) =>{
 
      console.log("requireAuth",req.cookies);
 
-    const token=req.cookies.jwt;
+    const token=req.cookies.adminjwt;
 
     console.log('token',token)
 
     if(token){
-        jwt.verify(token,"net ninja secret",(err,decodedToken)=>{
+        jwt.verify(token,"anandhu daa",(err,decodedToken)=>{
 
             if(err){
                 console.log(err.message);
                 res.status(302).send("change url").end()
             }
             else{
-            const {id}= decodedToken;
-            req.session.userId=id   
+            const {adminid}= decodedToken;
+            req.session.adminId=adminid 
             console.log("decodedToken",decodedToken);
             next();
             }
@@ -30,4 +30,4 @@ const requireAuth = (req,res,next) =>{
     }
 }
 
-module.exports= requireAuth;
+module.exports= adminAuth;
