@@ -44,13 +44,19 @@ module.exports.Editcart = async (req,res)=>{
     console.log(req.body,req.session.userId)
     const{ carid,name,type,image,currentDate,currentTime,model,
         origin,destination,startdate,enddate} =req.body;
+
+        updateobj={};
+
+        if(origin) updateobj.origin=origin;
+
+        if(destination) updateobj.destination = destination;
+
+        console.log(updateobj)
     
     let userid= req.session.userId; 
     try{
         
-        const car = await CarbookingDetails.updateOne({carid},{$set:{
-            name,origin,destination
-        }})
+        const car = await CarbookingDetails.updateOne({carid},{$set:updateobj })
         res.status(201).json(car)
     }
     catch(err){
@@ -63,14 +69,32 @@ module.exports.Editcart = async (req,res)=>{
 module.exports.Deletecart = async (req,res)=>{
 
 
-    console.log(req.body,req.session.userId)
-    const{ carid,name,type,image,currentDate,currentTime,model,
-        origin,destination,startdate,enddate} =req.body;
+    console.log("Deletecart",req.body.bookingid,req.session.userId)
+    // const{ carid,name,type,image,currentDate,currentTime,model,   
+    //     origin,destination,startdate,enddate} =req.body;
+    
+    // let userid= req.session.userId; 
+    try{
+        
+        const car = await CarbookingDetails.deleteOne({ _id:req.body.bookingid  });
+        res.status(201).json(car)
+    }
+    catch(err){
+            console.log(err)
+            res.status(400).send(err);
+    }
+}
+
+
+module.exports.GetBookedcars = async (req,res)=>{
+
+
+    console.log(req.body,req.session.userId)    
     
     let userid= req.session.userId; 
     try{
         
-        const car = await CarbookingDetails.deleteOne({carid})
+        const car = await CarbookingDetails.find({userid})
         res.status(201).json(car)
     }
     catch(err){

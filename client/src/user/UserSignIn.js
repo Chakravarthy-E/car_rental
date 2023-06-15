@@ -19,7 +19,7 @@ const UserSignIn = () => {
     } 
     
     else if (email.indexOf("@") === -1) {
-      seterror("email must contain @");
+      seterror("email must contain @");    
     } 
     
     else {

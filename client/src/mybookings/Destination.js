@@ -6,13 +6,17 @@ import { CarContextDetails } from "../context/CarContext.js";
 import Home from "../components/Home.jsx";
 
 const Destination = () => {
-  const TokenUser = JSON.parse(localStorage.getItem("token-user"))
+  // const TokenUser = JSON.parse(localStorage.getItem("token-user"))
   const {setheaderData,inputdata,setInputData} = useContext(CarContextDetails)
   const navigate = useNavigate()
 
-  useEffect(()=>{
-    
-  },[inputdata])
+ 
+
+  useEffect(() => {
+    // Save data to local storage whenever it changes
+    const data=window.localStorage.setItem('my_data', JSON.stringify(inputdata));
+    console.log(data);
+  });
   
 const handleInput =(e) => {
     const name = e.target.name;
@@ -23,13 +27,13 @@ const handleInput =(e) => {
 const save = (e) => {
   e.preventDefault()
   const {origin,destination,startDate,endDate} = inputdata;
-  const data = new FormData()
-  data.append("origin",origin)
-  data.append("destination", destination)
-  data.append("startDate", startDate)
-  data.append("endDate", endDate)
+  // const data = new FormData()
+  // data.append("origin",origin)
+  // data.append("destination", destination)
+  // data.append("startDate", startDate)
+  // data.append("endDate", endDate)
   console.log(inputdata);
-  setheaderData(inputdata)
+  //setheaderData(inputdata)
   navigate('/orderpage')
   
 }
@@ -67,7 +71,7 @@ const save = (e) => {
             <input
               type="date"
               className="form-control"
-              name="startDate"
+              name="startdate"
               onChange={handleInput}
               required
             />
@@ -78,7 +82,7 @@ const save = (e) => {
             <input
               type="date"
               className="form-control"
-              name="endDate"
+              name="enddate"
               onChange={handleInput}
               required
             />
@@ -89,7 +93,7 @@ const save = (e) => {
           </button>
         </form>
       </div>
-    </div>:
+    </div>
     </>
   );
 };

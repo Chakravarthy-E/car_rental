@@ -17,7 +17,7 @@ app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true
 }))
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))    
 app.use(cookieParser());
 
 const session = require("express-session");
@@ -27,7 +27,7 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.post('/api/upload', requireAuth, async (req, res) => {
+app.post('/api/upload', adminAuth, async (req, res) => {
   try {
     const fileStr = req.body[0]
 

@@ -71,7 +71,7 @@ module.exports.Userlogin = async (req, res) => {
     } 
     
     catch (err) {
-      if(err.message.includes('incorrect password')||
+      if(err.message.includes('incorrect password')||  
       err.message.includes('incorrect email')){
 
         errormessage = 'Invalid User Details';
@@ -124,11 +124,30 @@ module.exports.Adminlogin = async (req, res) => {
 
 module.exports.Logoutuser = (req, res) => {
 
-  res.cookie('jwt', '', { maxAge: 1 });
-  res.status(302).send("change url").end()
-}
+  console.log(req.cookies)
 
-module.exports.Logoutadmin = (req, res) => {
-  res.cookie('adminjwt', '', { maxAge: 1 });
-  res.status(302).send("change url").end()
+  if(req.cookies.jwt && req.cookies.adminjwt){
+     
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.cookie('adminjwt', '', { maxAge: 1 });
+    res.status(302).send("change url").end()
+
+  }
+
+  else if(req.cookies.adminjwt){
+     
+    res.cookie('adminjwt', '', { maxAge: 1 });
+    res.status(302).send("change url").end()
+
+  }
+
+  else if(req.cookies.jwt ){
+     
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.status(302).send("change url").end()
+
+  }
+
+  // res.cookie('jwt', '', { maxAge: 1 });
+  // res.status(302).send("change url").end()
 }

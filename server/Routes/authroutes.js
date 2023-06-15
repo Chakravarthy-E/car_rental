@@ -9,7 +9,6 @@ authroutes.post('/usersignup',UserSignup)
 authroutes.post('/userlogin',Userlogin)
 authroutes.post('/adminsignup',AdminSignup)
 authroutes.post('/adminlogin',Adminlogin)
-authroutes.post('/logoutuser',requireAuth,Logoutuser)
-authroutes.post('/logoutadmin',adminAuth,Logoutadmin)
+authroutes.get('/logoutuser',Logoutuser)
 
 module.exports = authroutes

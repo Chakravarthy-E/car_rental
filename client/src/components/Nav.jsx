@@ -9,11 +9,15 @@ const Nav = () => {
 
   async function logOutHandler() {
 
+      console.log("hello")
     try{
       const value = await axios.get("http://localhost:5000/logoutuser",{withCredentials:true})
     }
     catch(error){
-        console.log(error)  
+        console.log(error)
+        if(error.response.status === 302){
+          window.location.href='/'
+      }  
     }
     // localStorage.clear();
     //navigate("/");

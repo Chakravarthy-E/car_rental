@@ -1,89 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import './styles/editcar.css';
-
-function EditCarDetails({ carId }) {
-  const [carData, setCarData] = useState({});
-  const [isEditing, setIsEditing] = useState(false);
-  const [updatedCarData, setUpdatedCarData] = useState({});
-
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { CarContextDetails } from "../context/CarContext";
+import Nav from "../components/Nav";
+const EditCarDetails = () => {
+  const navigate = useNavigate();
+  const { car, setCar } = useContext(CarContextDetails);
+  const { carid } = useParams();
+  const [formData, setFormData] = useState({
+    name: "",
+    type: "",
+    model: "",
+    milage: "",
+    availableForm: "",
+    availableTill: "",
+    perKm: "",
+    description: "",
+    carDetails: "",
+    Details: "",
+  });
   useEffect(() => {
-    // Fetch car details based on the carId
-    fetch(``)
-      .then((res) => res.json())
-      .then((data) => setCarData(data));
-  }, [carId]);
-
-  const handleInputChange = (e) => {
-    setUpdatedCarData({
-      ...updatedCarData,
-      [e.target.name]: e.target.value,
-    });
+    // Fetch the car details based on the carid from the context or server
+    const carDetails = car.find((car) => car.carid === carid);
+    if (carDetails) {
+      setFormData(carDetails);
+    } else {
+      // Handle car not found scenario
+    }
+  }, [car, carid]);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleEditClick = () => {
-    setIsEditing(true);
-    setUpdatedCarData(carData);
-  };
-
-  const handleSaveClick = () => {
-    fetch(`/cars/${carId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(updatedCarData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCarData(data);
-        setIsEditing(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Perform the update operation, e.g., sending the updated car details to the server
+    // Update the car details in the context
+    setCar((prevCar) => {
+      const updatedCar = prevCar.map((car) => {
+        if (car.carid === carid) {
+          return { ...car, ...formData };
+        }
+        return car;
       });
+      return updatedCar;
+    });
+    navigate(`/mybookings`);
   };
-
   return (
-    <div className="edit-car-details-container">
-      {isEditing ? (
-        <div className="edit-form">
-          <label>Car Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={updatedCarData.name || ''}
-            onChange={handleInputChange}
-          />
-          <br />
-          <label>Car Type:</label>
-          <input
-            type="text"
-            name="type"
-            value={updatedCarData.type || ''}
-            onChange={handleInputChange}
-          />
-          <br />
-          <label>Mileage:</label>
-          <input
-            type="text"
-            name="mileage"
-            value={updatedCarData.mileage || ''}
-            onChange={handleInputChange}
-          />
-          <br />
-          <button className="save-button" onClick={handleSaveClick}>
-            Save
-          </button>
-        </div>
-      ) : (
-        <div className="car-details">
-          <p className='text-dark' >Car Name: <span className="car-data text-dark">{carData.name}</span></p>
-          <p className='text-dark'>Car Type: <span className="car-data text-dark">{carData.type}</span></p>
-          <p className='text-dark'>Mileage: <span className="car-data">{carData.mileage}</span></p>
-          <button className="edit-button" onClick={handleEditClick}>
-            Edit
-          </button>
-        </div>
-      )}
+    <>
+    <Nav />
+    <div className="edit-car-details" style={{backgroundColor:"#F1F6F9",height:"100vh"}}>
+      <h2 className="text-center">Edit Car Details</h2>
+      <div className="container">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">Name</label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="type" className="form-label ">Type</label>
+            <input
+              type="text"
+              className="form-control"
+              id="type"
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="model" className="form-label ">Model</label>
+            <input
+              type="text"
+              className="form-control"
+              id="model"
+              name="model"
+              value={formData.model}
+              onChange={handleChange}
+            />
+          </div>
+          {/* Add other car details input fields */}
+          <button type="submit" className="btn btn-primary">Save</button>
+        </form>
+      </div>
     </div>
+    </>
   );
-}
-
+};
 export default EditCarDetails;

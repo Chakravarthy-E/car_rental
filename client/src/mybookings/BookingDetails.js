@@ -10,14 +10,25 @@ import axios from "axios";
 
 const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) => {
 
-  const { data ,setData,inputdata,setInputData } = useContext(CarContextDetails);
+  const { bookingDetails ,setBookingDetails,inputdata,setInputData } = useContext(CarContextDetails);
 
   useEffect(() => {
-    const savedData = localStorage.getItem(inputdata);
+    // Load data from local storage on component mount
+    const savedData = window.localStorage.getItem("my_data");
+    console.log("savedData",savedData)
     if (savedData) {
       setInputData(JSON.parse(savedData));
     }
-    console.log(inputdata)
+  }, []);
+
+
+  useEffect(() => {
+    // Load data from local storage on component mount
+    const savedData = window.localStorage.getItem("bookingdata");
+    console.log("savedData",savedData)
+    if (savedData) {
+      setBookingDetails(JSON.parse(savedData));
+    }
   }, []);
 
     useEffect(() => {
@@ -31,19 +42,19 @@ const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) =>
 
   return (
     <div className="car-details">
-      {console.log(data)}
+      {console.log(bookingDetails)}
       <h3>Car Details</h3>
       <ul>
 
-        <li>Car Name:{data.name}</li>
-        <li>Car Model:{data.model}</li>
-        <Image cloudName="dtyutg5l9" publicId={data.image} width="300" crop="scale" />
+        <li>Car Name:{bookingDetails.name}</li>
+        <li>Car Model:{bookingDetails.model}</li>
+        <Image cloudName="dtyutg5l9" publicId={bookingDetails.image} width="300" crop="scale" />
        {/* <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" alt="" style={{width:"200px",height:"200px",objectFit:'cover'}} /> */}
         <hr />
         <li>Origin: {inputdata.origin}</li>
         <li>Destination: {inputdata.destination}</li>
-        <li>StartDate:{inputdata.startDate}</li>
-        <li>EndDate:{inputdata.endDate}</li>
+        <li>StartDate:{inputdata.startdate}</li>
+        <li>EndDate:{inputdata.enddate}</li>
         <hr />
         <li>BookingId:GOTSE8</li>
         <li>Booking Date: {currentDate}</li>
@@ -58,10 +69,10 @@ const PaymentDetails = ({currentDate,currentTime}) => {
 
   const navigate = useNavigate()
 
-  const { data ,setData,inputdata, } = useContext(CarContextDetails);
+  const { bookingDetails ,inputdata } = useContext(CarContextDetails);
 
   const{carid,name,type,model,milage,image,availableForm,
-  availableTill,perKm,description,carDetails,Details,}= data;
+  availableTill,perKm,description,carDetails,Details,}= bookingDetails;
 
   const{ origin,destination,startdate,enddate,}= inputdata
 
@@ -84,7 +95,7 @@ const PaymentDetails = ({currentDate,currentTime}) => {
     <div className="payment-details">
       <h3>Payment Details</h3>
       <ul>
-        <li>Price/Km:{data.perKm}</li>
+        <li>Price/Km:{bookingDetails.perKm}</li>
         <li>Distance:100km</li>
         <li>SubTotal:</li>
         <li>Tax: 5%GST</li>
@@ -118,6 +129,7 @@ const BookingDetails = () => {
 
         </div>
       </div>
+    </div>  
     </>
   );
 };

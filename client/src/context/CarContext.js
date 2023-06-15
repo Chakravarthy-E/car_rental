@@ -6,11 +6,11 @@ export const CarContextDetails = createContext();
 const CarContext = ({ children }) => {
 
   
-  const [car, setCar] = useState([]);
+  const [Car, setCar] = useState([]);
   const [edit, setEdit] = useState({});
   const [headerData, setheaderData] = useState({});
   const [CarData, setCarData] = useState({});
-  const [bookingDetails, setBookingDetails] = useState([]);
+  const [bookingDetails, setBookingDetails] = useState({});
   const [BookData, setBookData] = useState([]);
 
   const [inputdata, setInputData] = useState({
@@ -39,24 +39,42 @@ const CarContext = ({ children }) => {
 
   const [EditPaymaentDatails, setEditPaymaentDatails] = useState({});
 
+
   useEffect(() => {
     // Load data from local storage on component mount
-    const savedData = localStorage.getItem("inputdata");
+    const savedData = window.localStorage.getItem("my_data");
+    //console.log("savedData",savedData)
     if (savedData) {
       setInputData(JSON.parse(savedData));
     }
   }, []);
 
   useEffect(() => {
-    // Save data to local storage whenever it changes
-    localStorage.setItem('inputdata', JSON.stringify(inputdata));
-  }, [inputdata]);
+    // Load data from local storage on component mount
+    const savedData = window.localStorage.getItem("bookingdata");
+    //console.log("Data",savedData)
+    if (savedData) {
+      setBookingDetails(JSON.parse(savedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Load data from local storage on component mount
+    const savedData = window.localStorage.getItem("allcarlist");
+    console.log("allcarlist",savedData)
+    if (savedData) {
+      setCar(JSON.parse(savedData));
+    }
+  }, []);
+
+
+  
 
   return (
     <>
       <CarContextDetails.Provider
         value={{
-          car,
+          Car,
           setCar,
           data,
           setData,

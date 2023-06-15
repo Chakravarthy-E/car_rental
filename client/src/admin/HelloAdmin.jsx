@@ -58,32 +58,29 @@ function HelloAdmin() {
       </div>
 
 
-      <div id="container" style={{margin:"30px"}}>
-        {car_data.map((value,index) => (
+      <div id="container" style={{ margin: "30px" }}>
+        {car_data.map((value, index) => (
           <div id="card" key={index}>
-            {/* {console.log(value)} */}
-
-            <div id="img">
-              {/* <img
-                src={value.image}
-                style={{ width: "280px", margin: "5px" }}
-              /> */}
-              <Image cloudName="dtyutg5l9" publicId={value.images} width="300" crop="scale" />
-            </div>
-            <div id="details">
-              <p className="text-dark">6 Person</p>
-              <span>{value.cartype}</span>
-              <span>{value.perKm} Rs/KM</span>
-
-              <hr style={{ color: "#7C7C7C" }} />
-
-              <div style={{ marginTop: "20px" }}>
-                <span>Available date</span>
-                <span>{value.availableFrom} - {value.availableTill}</span>
-      
+            <Link to = {`/edit-car/${value._id}`}>
+              <div id="img">
+                <Image cloudName="dtyutg5l9" publicId={value.images} width="300" crop="scale" />
               </div>
-            </div>
-          </Link>
+
+              <div id="details">
+                <p className="text-dark">6 Person</p>
+                <span>{value.cartype}</span>
+                <span>{value.perKm} Rs/KM</span>
+
+                <hr style={{ color: "#7C7C7C" }} />
+
+                <div style={{ marginTop: "20px" }}>
+                  <span>Available date</span>
+                  <span>{value.availableFrom} - {value.availableTill}</span>
+
+                </div>
+              </div>
+            </Link>
+          </div>
         ))}
       </div>
     </div>
