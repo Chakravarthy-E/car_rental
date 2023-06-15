@@ -5,7 +5,7 @@ import CarList from "../Car/CarList";
 
 const OrderPage = () => {
   return (
-    <div>
+    <div style={{backgroundColor:"#F1F6F9"}}>
       <Nav />
       <Header />
       <CarList />

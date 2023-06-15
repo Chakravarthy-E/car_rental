@@ -54,7 +54,7 @@ const AdminSignUp = () => {
     else{
 
     try {
-      const data = await axios.post("http://localhost:5000/adminsignup", { email, password, Name, contact }, { withCredentials: true });
+      const data = await axios.post("https://car-rental-app222.onrender.com/adminsignup", { email, password, Name, contact }, { withCredentials: true });
       console.log(data);
       seterror("Registered Sucessfully")
       setTimeout(() => {

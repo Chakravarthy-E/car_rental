@@ -30,6 +30,15 @@
   height: auto;
   border-radius: 5px;
   margin-bottom: 10px;
+  position: relative;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Add transition properties */
+
+}
+
+.card img:hover {
+  /* Define the hover effect for the card image */
+  transform: scale(1.1); /* Example: Increase the size by 10% */
+   /* Example: Reduce the opacity to 80% */
 }
 .car-details{
   border: none;

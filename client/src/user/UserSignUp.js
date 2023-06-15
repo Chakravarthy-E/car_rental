@@ -56,7 +56,7 @@ const UserSignUp = () => {
     else{
 
     try {
-      const data = await axios.post("http://localhost:5000/usersignup", { email, password }, { withCredentials: true })
+      const data = await axios.post("https://car-rental-app222.onrender.com/usersignup", { email, password }, { withCredentials: true })
       console.log(data);
       seterror("Registered Sucessfully")
       setTimeout(() => {

@@ -13,7 +13,7 @@ export default function AllImageCloudinary({carname,carmodel,adminid,seturl,url}
     const loadImages = async () => {
 
         try {
-            const res = await axios.get('http://localhost:5000/api/allimages',{
+            const res = await axios.get('https://car-rental-app222.onrender.com/api/allimages',{
                 params:{
                     name:carname,
                     model:carmodel,
@@ -42,7 +42,7 @@ export default function AllImageCloudinary({carname,carmodel,adminid,seturl,url}
             
                         <Image
                             // key={index}
-                            cloudName="dtyutg5l9"
+                            cloudName="dw5v3efs6"
                             publicId={imageId}
                             width="300"
                             crop="scale"

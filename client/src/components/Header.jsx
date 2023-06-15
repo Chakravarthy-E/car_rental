@@ -34,8 +34,8 @@ const Header = () => {
             <span className="text-secondary">{headerData.endDate}</span>
           </li>
           </ul>
+          
           <Link className="btn btn-primary" id="modify" to='/destination' onClick={()=>setheaderData(headerData)}>Modify</Link>
-      
       </div>
     </div>
   );

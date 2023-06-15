@@ -4,11 +4,15 @@ import "./styles/destination.css"
 import { useNavigate } from "react-router-dom";
 import { CarContextDetails } from "../context/CarContext.js";
 import Home from "../components/Home.jsx";
+import { useCookies } from "react-cookie";
+
 
 const Destination = () => {
-  const TokenUser = JSON.parse(localStorage.getItem("token-user"))
   const {setheaderData,inputdata,setInputData} = useContext(CarContextDetails)
   const navigate = useNavigate()
+  const [cookies] = useCookies(['token']);
+  const token = cookies.token;
+
 
   useEffect(()=>{
     
@@ -35,28 +39,31 @@ const save = (e) => {
 }
 
   return (<>
+    
     <div className="destination">
       <Nav />
       <h4 className="text-center mt-5 text-light">Start your journey............</h4>
       <div className="container mt-3">
         <form onSubmit={save} >
           <div className="mb-2">
-            <label className="form-label text-light">Origin Name</label>
+            <label className="form-label text-light">Origin</label>
             <input
               type="text"
               className="form-control"
               name="origin"
+              placeholder="origin name"
               onChange={handleInput}
               required
             />
           </div>
 
           <div className="mb-2">
-            <label className="form-label text-light">Destination Name</label>
+            <label className="form-label text-light">Destination</label>
             <input
               type="text"
               className="form-control"
               name="destination"
+              placeholder="destination name"
               onChange={handleInput}
               required
             />
@@ -89,7 +96,7 @@ const save = (e) => {
           </button>
         </form>
       </div>
-    </div>:
+    </div>
     </>
   );
 };

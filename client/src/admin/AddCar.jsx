@@ -108,9 +108,10 @@ const AddCar = () => {
   const uploadImage = async (base64EncodedImage) => {
 
     console.log("hello")
-
+    
+    console.log(base64EncodedImage)
     try {
-        const publicid = await axios.post('http://localhost:5000/api/upload', base64EncodedImage
+        const publicid = await axios.post('https://car-rental-app222.onrender.com/api/upload', base64EncodedImage
         , {
           params: {
             name: name,

@@ -36,11 +36,11 @@ const Home = () => {
           <div className="user">
             <p className="text-light">User</p>
             <div className="button-user-admin-login-containecr">
-              <button className="button-50" onClick={userlogin}>
+              <button className="btn btn-primary" onClick={userlogin}>
                 {" "}
                 User Login{" "}
               </button>
-              <button className="button-50" onClick={usersignup}>
+              <button className="btn btn-primary" onClick={usersignup}>
                 {" "}
                 User Signup
               </button>
@@ -49,10 +49,10 @@ const Home = () => {
           <div className="Admin">
             <p>Admin</p>
             <div className="button-user-admin-login-containecr">
-              <button className="button-50" onClick={Adminlogin}>
+              <button className="btn btn-primary" onClick={Adminlogin}>
                 Admin login
               </button>
-              <button className="button-50" onClick={Adminsignup}>
+              <button className="btn btn-primary" onClick={Adminsignup}>
                 Admin signup
               </button>
             </div>

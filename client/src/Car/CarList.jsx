@@ -7,107 +7,78 @@ import axios from "axios";
 import AllImageCloudinary from "../Cloudinary/Allimagescloudinary";
 import { Image } from "cloudinary-react";
 import { Dropdown } from "react-bootstrap";
+import { useCookies } from "react-cookie";
+
 const CarList = () => {
-  const [filterType, setfilterType] = useState("All");
-
-
-  const { data ,setData,inputdata,setInputData } = useContext(CarContextDetails);
-
+  const [filterType, setFilterType] = useState("All");
+  const { data, setData, inputdata, setInputData } = useContext(CarContextDetails);
+  const [Cars, setCars] = useState([]);
+  const navigate = useNavigate();
+  
+  const [cookies] = useCookies(['token']);
+  const token = cookies.token;
   useEffect(() => {
-    const savedData = localStorage.getItem("inputdata");
-    if (savedData) {
-      setInputData(JSON.parse(savedData));
+    // Retrieve the data from local storage
+    const storedData = localStorage.getItem('myData');
+    if (storedData) {
+      setData(JSON.parse(storedData));
     }
-    console.log(inputdata)
   }, []);
 
-  const { data ,setData } = useContext(CarContextDetails);
-  
-  
-  const [data, setData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/getallcar", {
-      authorization: JSON.parse(localStorage.getItem("token-user ")),
-    })
-      .then((res) => res.json())
-      .then((res) => setData(res));
-  }, []);
-
-
-
+    // Store the data in local storage whenever it changes
+    if (data) {
+      localStorage.setItem('myData', JSON.stringify(data));
+    }
+  }, [data]);
+  
   useEffect(() => {
-    async function Allcar() {
+    async function fetchAllCars() {
       try {
-        const value = await axios.get("http://localhost:5000/getallcar", {
+        const response = await axios.get("https://car-rental-app222.onrender.com/getallcar", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           withCredentials: true,
         });
-        console.log(value);
-        setCars(value.data);
+        setCars(response.data);
       } catch (error) {
         console.log("CarList", error);
       }
     }
-    Allcar();
+    fetchAllCars();
   }, []);
-  // useEffect(()=>{
-  //   async function Allcartype(){
-  //     if (filterType === "All") {
-  //       return ;
-  //     }
-  //     try{
-  //       const data = await axios.post("http://localhost:5000/filtercar",{filterType},{withCredentials:true})
-  //       console.log(data);
-  //     }
-  //     catch(error){
-  //       console.log("CarList",error);
-  //     }
-  //   }
-  //   Allcartype();
-  // },[filterType])
-  // const handleFilterChange = (event) => {
-  //   setFilterType(event.target.value);
-  // };
-  function handleFilterChange(e) {
-    if (e.target && e.target.value) {
-      setfilterType(e.target.value);
-      const type = Cars.filter((d) => d.model === e.target.value);
-      if (e.target.value === "All") {
-        setfilterType("All");
-      } else if (type.length !== 0) {
-        setfilterType(type);
-        setCars([...type]);
-      }
-    }
-  }
-  const navigate = useNavigate();
-  const handleBookNow = (car, i) => {
-    // Navigate to the car details page
-    console.log("carlist", car._id, i);
-    setData({
-    carid:car._id,  
-    name: car.name,
-    type: car.cartype,
-    model: car.model,
-    milage: car.milage,
-    image: car.images,
-    availableFrom: car.availableFrom,
-    availableTill: car.availableTill,
-    perKm: car.perKm,
-    description: car.description,
-    carDetails: car.carDetails,
-    Details: car.Details
-  })
 
-    //navigate(`/bookingdetails`);
+  function handleFilterChange(value) {
+    setFilterType(value);
+    const filteredCars = Cars.filter((car) => {
+      if (value === "All") {
+        return true;
+      } else {
+        return car.model === value;
+      }
+    });
+    setCars(filteredCars);
+  }
+
+  const handleBookNow = (car, i) => {
+    setData({
+      carid: car._id,
+      name: car.name,
+      type: car.cartype,
+      model: car.model,
+      milage: car.milage,
+      image: car.images,
+      availableFrom: car.availableFrom,
+      availableTill: car.availableTill,
+      perKm: car.perKm,
+      description: car.description,
+      carDetails: car.carDetails,
+      Details: car.Details,
+    });
+    navigate(`/bookingdetails`);
   };
-  // const filteredCars = cars.filter((car) => {
-  //   if (filterType === "All") {
-  //     return true;
-  //   } else {
-  //     const carType = car.brand ? car.brand.toLowerCase() : "";
-  //     return carType === filterType.toLowerCase();
-  //   }
-  // });
+
   return (
     <>
       <div className="filter-section d-flex align-items-center">
@@ -125,11 +96,11 @@ const CarList = () => {
               All
             </Dropdown.Item>
             <Dropdown.Item
-              eventKey="XUV"
-              active={filterType === "XUV"}
-              onClick={() => handleFilterChange("XUV")}
+              eventKey="SUV"
+              active={filterType === "SUV"}
+              onClick={() => handleFilterChange("SUV")}
             >
-              XUV
+              SUV
             </Dropdown.Item>
             <Dropdown.Item
               eventKey="UV"
@@ -141,22 +112,31 @@ const CarList = () => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      <div className="car-list-container">
-        <h2>Car List</h2>
-        <div className="car-list">
+      <div className="container">
+        <div className="row">
           {Cars.map((car, index) => (
-            <div key={car._id} className="card">
-              {console.log(car)}
-              {/* <img src={car.image} alt={car.name} /> */}
-              {/* <Image cloudName="dtyutg5l9" publicId={car.images} width="300" crop="scale" /> */}
-              {/* <AllImageCloudinary  carname={car.name} carmodel={car.model} seturl={setimgurl} url={imgurl}/> */}
-              <div className="car-details">
-                <h3 className="text-dark small text-left">{car.name}</h3>
-                <p className="text-secondary small">Car Type: {car.cartype}</p>
-                <p className="text-success small">Mileage: {car.milage}</p>
-                <button onClick={() => handleBookNow(car, index)}>
-                  Book Now
-                </button>
+            <div key={car._id} className="col-md-4 mb-3">
+              <div className="card">
+                <div className="card-image">
+                  <Image
+                    cloudName="dw5v3efs6"
+                    publicId={car.images}
+                    width="300"
+                    crop="scale"
+                  />
+                </div>
+                <div className="card-body">
+                  <h5 className="card-title">{car.name}</h5>
+                  <p className="card-text">Car model: {car.model}</p>
+                  <p className="card-text">Mileage: {car.milage}</p>
+                  <p className="card-text text-success">Per Km: {car.perKm}</p>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => handleBookNow(car, index)}
+                  >
+                    Book Now
+                  </button>
+                </div>
               </div>
             </div>
           ))}
@@ -165,4 +145,5 @@ const CarList = () => {
     </>
   );
 };
+
 export default CarList;

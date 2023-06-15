@@ -30,7 +30,7 @@ const AdminLogin = () => {
     else{
 
     try {
-      const data = await axios.post("http://localhost:5000/adminlogin", { email, password }, { withCredentials: true })
+      const data = await axios.post("https://car-rental-app222.onrender.com/adminlogin", { email, password }, { withCredentials: true })
       console.log(data)
       navigate("/helloadmin")
     }

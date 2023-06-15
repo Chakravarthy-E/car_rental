@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react";
-import "./styles/editcar.css"
+import React, { useState } from "react";
+import "./styles/editcar.css";
 import axios from "axios";
 import Nav from "./Nav";
 
@@ -13,15 +13,10 @@ const EditCar = () => {
   const [availableTill, setAvailableTill] = useState("");
   const [description, setdescription] = useState("");
   const [images, setimages] = useState([]);
-  const [carDetails, setCarDetails] = useState("");
-  const [Details, setDetails] = useState("");
-  console.log(images)
-
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
     setimages([...images, ...files]);
-    console.log(images);
   };
 
   const handleImageDelete = (index) => {
@@ -30,11 +25,9 @@ const EditCar = () => {
     setimages(newCarImages);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Handle form submission or data saving here
-
 
     let img = [];
     for (let i = 0; i < images.length; i++) {
@@ -42,13 +35,9 @@ const EditCar = () => {
       img.push({ x });
     }
 
-
-    console.log(img);
-
     try {
-      console.log(images, URL.createObjectURL(images[0]));
       const data = await axios.post(
-        "http://localhost:5000/addcar",
+        "https://car-rental-app222.onrender.com/addcar",
         {
           name,
           cartype,
@@ -59,32 +48,26 @@ const EditCar = () => {
           availableTill,
           description,
           img,
-          carDetails,
-          Details,
         },
         { withCredentials: true }
       );
-      console.log(data);
+
       if (data.status === 201) {
-        alert("Added sucessfully");
-        setDetails("");
-        setCarDetails("");
-        setimages([]);
-        setdescription("");
-        setAvailableTill("");
-        setAvailableFrom("");
-        setperKM("");
+        alert("Added successfully");
         setname("");
         setcartype("");
         setmodel("");
         setmilage("");
-        
+        setperKM("");
+        setAvailableFrom("");
+        setAvailableTill("");
+        setdescription("");
+        setimages([]);
       }
     } catch (err) {
       console.log(err);
     }
   };
-
 
   const handleCancel = () => {
     // Handle cancel action here
@@ -173,10 +156,10 @@ const EditCar = () => {
                 className="cancel-button"
                 onClick={handleCancel}
               >
-                Cancel
+                Delete
               </button>
               <button type="submit" className="add-button btn-primary">
-                Save
+                Add
               </button>
             </div>
           </form>
@@ -202,7 +185,7 @@ const EditCar = () => {
                     className="delete-button"
                     onClick={() => handleImageDelete(index)}
                   >
-                    X
+                   XXX
                   </button>
                 </div>
               ))}
@@ -210,15 +193,12 @@ const EditCar = () => {
           </div>
           <div className="details-section">
             <h2>Car Details</h2>
-            <textarea
-              value={carDetails}
-              onChange={(e) => setCarDetails(e.target.value)}
-            ></textarea>
+              <textarea value={""}  /*onChange={(e) => setCarDetails(e.target.value)}*/></textarea>
             <h2>Owner Details</h2>
-            <textarea
-              value={Details}
-              onChange={(e) => setDetails(e.target.value)}
-            ></textarea>
+              <textarea value={""} /*onChange={(e) => setDetails(e.target.value)}*/></textarea>
+          </div>
+          <div className="form-buttons">
+            <button className="save-button">Save</button>
           </div>
         </div>
       </div>
@@ -226,6 +206,4 @@ const EditCar = () => {
   );
 };
 
-
 export default EditCar;
-

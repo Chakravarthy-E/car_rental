@@ -16,7 +16,7 @@ const Nav = () => {
         console.log(error)  
     }
     // localStorage.clear();
-    //navigate("/");
+    navigate("/");
   }
 
   return (
@@ -26,7 +26,7 @@ const Nav = () => {
         <Link to="/mybookings" className="link">
           My Bookings
         </Link>
-        <button className="text-light rounded" onClick={logOutHandler}>Log Out</button>
+        <button className=" rounded" onClick={logOutHandler}>Log Out</button>
       </div>
     </div>
   );

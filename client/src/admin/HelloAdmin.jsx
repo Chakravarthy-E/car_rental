@@ -19,7 +19,7 @@ function HelloAdmin() {
   useEffect(() => {
     async function fetchAdminCarData() {
       try {
-        const response = await axios.get("http://localhost:5000/getadmincar", {
+        const response = await axios.get("https://car-rental-app222.onrender.com/getadmincar", {
           withCredentials: true,
         });
         const dataWithId = response.data.map((car) => ({
@@ -59,10 +59,10 @@ function HelloAdmin() {
 
       <div id="container" style={{ margin: "30px" }}>
         {carData.map((value) => (
-          <div id="card" key={value.id}>
-            <Link to="/editcar">
+          <div id="card" key={value.id}  style={{textDecorationLine:"none"}}>
+            <Link to="/edit-car/:Id">
               <div id="img">
-                <Image cloudName="dtyutg5l9" publicId={value.images} width="300" crop="scale" />
+                <Image cloudName="dw5v3efs6" publicId={value.images} width="300" crop="scale" />
               </div>
               <div id="details">
                 <p className="text-dark">6 Person</p>

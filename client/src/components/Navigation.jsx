@@ -6,7 +6,7 @@ const Navigation = () => {
     <>
       <nav id="admin-page-nav-container-my-nav">
         <div id="logo-of-the-rental-car-app">
-          <span id="name-of-the-app-rental-car-app">Car Rental App</span>
+          <span id="name-of-the-app-rental-car-app text-light" className="bold mx-3">Car Rental App</span>
         </div>
       </nav>
     </>

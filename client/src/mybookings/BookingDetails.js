@@ -35,61 +35,79 @@ const CarDetails = ({setCurrentDate,setCurrentTime,currentDate, currentTime}) =>
       <h3>Car Details</h3>
       <ul>
 
-        <li>Car Name:{data.name}</li>
-        <li>Car Model:{data.model}</li>
-  { /* <Image cloudName="dtyutg5l9" publicId={data.image} width="300" crop="scale" /> */}
-       {/* <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" alt="" style={{width:"200px",height:"200px",objectFit:'cover'}} /> */}
+        <li >Car Name <span className="text-secondary">:{data.name}</span></li>
+        <li>Car Model <span className="text-secondary">:{data.model}</span></li>
+       <Image cloudName="dw5v3efs6" publicId={data.image} width="300" crop="scale" />
         <hr />
-        <li>Origin: {inputdata.origin}</li>
-        <li>Destination: {inputdata.destination}</li>
-        <li>StartDate:{inputdata.startDate}</li>
-        <li>EndDate:{inputdata.endDate}</li>
+        <li>Origin: <span className="text-secondary"> {inputdata.origin}</span></li>
+        <li>Destination: <span className="text-secondary">{inputdata.destination}</span></li>
+        <li>StartDate: <span className="text-secondary">{inputdata.startDate}</span></li>
+        <li>EndDate: <span className="text-secondary">{inputdata.endDate}</span></li>
         <hr />
-        <li>BookingId:GOTSE8</li>
-        <li>Booking Date: {currentDate}</li>
-        <li>Booking Time: {currentTime}</li>
+        <li>Booking Date: <span className="text-secondary">{currentDate}</span></li>
+        <li>Booking Time: <span className="text-secondary">{currentTime}</span></li>
       </ul>
     </div>
   );
 };
 
 
-const PaymentDetails = ({currentDate,currentTime}) => {
+const PaymentDetails = ({ currentDate, currentTime }) => {
+  const navigate = useNavigate();
+  const { data, bookingDetails, setBookingDetails, inputdata } = useContext(
+    CarContextDetails
+  );
 
-  const navigate = useNavigate()
+  const {
+    carid,
+    name,
+    type,
+    image,
+    model,
+    origin,
+    destination,
+    startdate,
+    enddate,
+  } = data;
 
-  const { data ,setData,inputdata, } = useContext(CarContextDetails);
+  const handleClick = async () => {
+    try {
+      const newBooking = {
+        carid,
+        name,
+        type,
+        image,
+        model,
+        origin,
+        destination,
+        startdate,
+        enddate,
+        currentDate,
+        currentTime,
+      };
 
-  const{carid,name,type,model,milage,image,availableForm,
-  availableTill,perKm,description,carDetails,Details,}= data;
+      // Add the new booking to the bookingDetails array
+      setBookingDetails((prevBookingDetails) => [...prevBookingDetails, newBooking]);
 
-  const{ origin,destination,startdate,enddate,}= inputdata
+      // Send the booking data to the server
+      await axios.post("https://car-rental-app222.onrender.com/bookcar", newBooking, {
+        withCredentials: true,
+      });
 
-  const handleClick = async()=>{
-
-    try{
-      const book= await axios.post("http://localhost:5000/bookcar",{carid,name,type,image,model,
-      origin,destination,startdate,enddate,currentDate,currentTime},{ withCredentials: true })
-    }
-    catch(error){
-
+      navigate("/mybookings");
+    } catch (error) {
       console.log(error);
     }
-
-
-      navigate("/mybookings")
-  }
+  };
 
   return (
-    <div className="payment-details my-1" >
+    <div className="payment-details" style={{marginTop:"-280px"}}>
       <h3>Payment Details</h3>
       <ul>
-        <li>Price/Km:{data.perKm}</li>
-        <li>Distance:100km</li>
-        <li>SubTotal:</li>
-        <li>Tax: 5%GST</li>
-        <li>Grand Total:</li>
-        <li>RS:</li>
+        <li>Price/Km: <span className="text-secondary"> {data.perKm}</span></li>
+        <li>Pricing:  <span className="text-secondary">{data.perKm * 3}</span></li>
+        <li>Tax charges:<span className="text-secondary">{50}</span></li>
+        <li>Grand Total:<span className="text-success">{data.perKm * 3 + 50}</span></li>
       </ul>
       <button className="rounded" onClick={handleClick}>
         Proceed
@@ -97,6 +115,7 @@ const PaymentDetails = ({currentDate,currentTime}) => {
     </div>
   );
 };
+
 
 const BookingDetails = () => {
 
@@ -107,7 +126,7 @@ const BookingDetails = () => {
   return (
     <>
      <Nav />
-    <div className="booking-details">
+    <div className="booking-details" style={{backgroundColor:"#F1F6F9"}}>
       <div className="container">
         <div className="left-side">
           <CarDetails setCurrentDate={setCurrentDate} setCurrentTime={setCurrentTime}
