@@ -18,9 +18,11 @@ const carbookingSchema = new mongoose.Schema({
     },
     origin:{
         type:String
+       
     },
     destination:{
         type:String
+      
     },
     startdate:{
         type:String

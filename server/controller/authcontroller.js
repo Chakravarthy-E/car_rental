@@ -132,3 +132,4 @@ module.exports.Logoutadmin = (req, res) => {
   res.cookie('adminjwt', '', { maxAge: 1 });
   res.status(302).send("change url").end()
 }
+

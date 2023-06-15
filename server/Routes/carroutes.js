@@ -12,6 +12,4 @@ Carroutes.post('/editadmincar',adminAuth,EditCar)
 Carroutes.post('/deleteadmincar',adminAuth,DeleteCar)
 Carroutes.get('/getadmincar',adminAuth,GetAdminCar)
 
-
-
 module.exports = Carroutes 

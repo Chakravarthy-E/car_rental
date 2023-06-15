@@ -8,8 +8,8 @@ const bookingroutes=Router();
 
 // User routes
 bookingroutes.get('/getallcar',requireAuth,GetAllCar)
-bookingroutes.post('/bookcar',requireAuth,Addtocart) ;
-bookingroutes.post('/editcar',requireAuth,Editcart)
+bookingroutes.post('/bookcar',Addtocart) ;
+bookingroutes.post('/editcar',Editcart)
 bookingroutes.post('/deletecar',requireAuth,Deletecart)
 // Carroutes.post('/deletecar',requireAuth,DeleteCar)
 // Carroutes.get('/getadmincar',requireAuth,GetAdminCar)

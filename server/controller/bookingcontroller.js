@@ -41,17 +41,17 @@ module.exports.Addtocart = async (req,res)=>{
 module.exports.Editcart = async (req,res)=>{
 
 
-    console.log(req.body,req.session.userId)
+    console.log(req.body)
     const{ carid,name,type,image,currentDate,currentTime,model,
         origin,destination,startdate,enddate} =req.body;
     
     let userid= req.session.userId; 
     try{
         
-        const car = await CarbookingDetails.updateOne({carid},{$set:{
-            name,origin,destination
-        }})
-        res.status(201).json(car)
+        // const car = await CarbookingDetails.updateOne({carid},{$set:{
+        //     name,origin,destination
+        // }})
+        // res.status(201).json(car)
     }
     catch(err){
             console.log(err)
